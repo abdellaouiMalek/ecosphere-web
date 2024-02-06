@@ -42,3 +42,5 @@ Welcome to Ecosphere, your sustainable living companion! Developed with Symfony,
 
 ## 🛠️ Getting Started  
 ### Installation :
+To install Symfony, you typically use Composer, a dependency manager for PHP.
+[YOU CAN INSTALL IT FROM HERE](https://getcomposer.org/download/).
