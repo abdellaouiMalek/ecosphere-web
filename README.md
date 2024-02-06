@@ -29,35 +29,16 @@ Welcome to Ecosphere, your sustainable living companion! Developed with Symfony,
 * [Symfony](https://symfony.com/)
 
 ## 🌟 Features 
- ### 1. Animal Handling :
- Create, display and manage Animal Instances.
-### 2. Zoo Operations :
- Control Animals: Add, remove, find, and see animals in the zoo easily.
-### 3. Error Handling
- Fix Problems: Deal with age and zoo size issues to keep everything running smoothly.
-### 4. Animal Types and Behavior
- Different Kinds of Animals: Handle various animal types (Aquatic, Terrestrial).
-### 5. Behavioral Actions
- Special Things Animals Do: Make animals do specific actions, like swimming for aquatic animals and other unique behaviors.
-### 6. Interactions
- How Animals Get Along: See and manage how animals talk, play, or live together in the zoo.
- 
+ ### 1. Carpool Management :
+ Facilitates easy sharing of rides with customizable details.
+### 2. Reusable Items Management :
+ Empowers users to rent and reuse items with flexible rental options.
+### 3. Sales Points Management :
+ Connects producers directly with sales outlets through detailed listings.
+### 4. Eco-Events :
+ Encourages nature-friendly activities with easy event creation and management.
+
 ## 🗂 Structure 
-### 1.Entities Folder (src/entities)
-Holds Different Things: This folder contains classes that represent various things (like animals or parts of the zoo) in the zoo management system.
-
-### 2.Enums Folder (src/enums)
-Sorts Animal Diets: This folder has lists that define what animals eat, categorizing them as meat-eaters 🥩, plant-eaters 🌱, or both 🥕 in the zoo system.
-
-### 3.Exceptions Folder (src/exceptions)
-Handles Mistakes: This folder contains special classes that deal with problems like wrong ages or when the zoo is full in the zoo management system.
-
-### 4.Interfaces Folder (src/interfaces)
-Defines Animal Diets: This folder contains plans that describe what animals eat, like meat 🥩, plants 🌱, or both 🥕, used to organize them in the zoo system.
-
-### 5.Main ZooManagement Folder (src/main/ZooManagement)
-Starts Everything: This folder is the starting point of the zoo management system. It's where the system begins its work.
-
 
 ## 🛠️ Getting Started  
 ### Installation :
