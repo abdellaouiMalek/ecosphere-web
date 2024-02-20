@@ -9,7 +9,6 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Id_h</th>
                 <th>InitialCondition</th>
                 <th>ArrivalState</th>
                 <th>actions</th>
@@ -19,12 +18,11 @@
         {% for historique in historiques %}
             <tr>
                 <td>{{ historique.id }}</td>
-                <td>{{ historique.idH }}</td>
                 <td>{{ historique.initialCondition }}</td>
                 <td>{{ historique.arrivalState }}</td>
                 <td>
-                    <a href="{{ path('app_historique_show', {'id': historique.id}) }}">show</a>
-                    <a href="{{ path('app_historique_edit', {'id': historique.id}) }}">edit</a>
+                    <a href="{{ path('app_historique_show', {'id': historique.id}) }}"class="btn btn-danger">show</a>
+                    <a href="{{ path('app_historique_edit', {'id': historique.id}) }}"class="btn btn-warning">edit</a>
                 </td>
             </tr>
         {% else %}

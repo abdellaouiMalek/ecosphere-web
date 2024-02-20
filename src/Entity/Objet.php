@@ -6,6 +6,7 @@ use App\Repository\ObjetRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ObjetRepository::class)]
 class Objet
@@ -14,29 +15,39 @@ class Objet
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+/**
+     * @Assert\NotBlank(message="Type ne doit pas être vide.")
+     
+     */
+    #[ORM\Column(length: 255)]
+    private ?string $Type = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $id_o = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $type = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $picture = null;
-
+    private ?string $Picture = null;
+  /**
+     * @ORM\Column
+     * @Assert\NotBlank(message="L'âge ne peut pas être vide")
+     * @Assert\Type(type="integer", message="L'âge doit être un nombre entier")
+     * @Assert\GreaterThan(value=0, message="L'âge doit être supérieur à zéro")
+     */
+   
     #[ORM\Column]
-    private ?int $age = null;
+    private ?int $Age = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $history = null;
-
+    private ?string $historique = null;
+ /**
+     * @Assert\NotBlank(message="La description ne doit pas être vide.")
+     * @Assert\Type("string", message="La valeur {{ value }} n'est pas une chaîne de caractères valide.")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "La description ne doit pas dépasser {{ limit }} caractères."
+     * )
+     */
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $type_o = null;
-
-    #[ORM\OneToMany(targetEntity: Historique::class, mappedBy: 'objet')]
+    #[ORM\OneToMany(mappedBy: 'Objet', targetEntity: Historique::class)]
     private Collection $Historique;
 
     public function __construct()
@@ -49,62 +60,50 @@ class Objet
         return $this->id;
     }
 
-    public function getIdO(): ?string
-    {
-        return $this->id_o;
-    }
-
-    public function setIdO(string $id_o): static
-    {
-        $this->id_o = $id_o;
-
-        return $this;
-    }
-
     public function getType(): ?string
     {
-        return $this->type;
+        return $this->Type;
     }
 
-    public function setType(string $type): static
+    public function setType(string $Type): static
     {
-        $this->type = $type;
+        $this->Type = $Type;
 
         return $this;
     }
 
     public function getPicture(): ?string
     {
-        return $this->picture;
+        return $this->Picture;
     }
 
-    public function setPicture(string $picture): static
+    public function setPicture(string $Picture): static
     {
-        $this->picture = $picture;
+        $this->Picture = $Picture;
 
         return $this;
     }
 
     public function getAge(): ?int
     {
-        return $this->age;
+        return $this->Age;
     }
 
-    public function setAge(int $age): static
+    public function setAge(int $Age): static
     {
-        $this->age = $age;
+        $this->Age = $Age;
 
         return $this;
     }
 
-    public function getHistory(): ?string
+    public function getHistorique(): ?string
     {
-        return $this->history;
+        return $this->historique;
     }
 
-    public function setHistory(string $history): static
+    public function setHistorique(string $historique): static
     {
-        $this->history = $history;
+        $this->historique = $historique;
 
         return $this;
     }
@@ -119,26 +118,6 @@ class Objet
         $this->description = $description;
 
         return $this;
-    }
-
-    public function getTypeO(): ?string
-    {
-        return $this->type_o;
-    }
-
-    public function setTypeO(string $type_o): static
-    {
-        $this->type_o = $type_o;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Historique>
-     */
-    public function getHistorique(): Collection
-    {
-        return $this->Historique;
     }
 
     public function addHistorique(Historique $historique): static
