@@ -1,18 +1,107 @@
+{% extends 'base.html.twig' %}
+{% block content %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Event</title>
+    <style>
+    /* Custom CSS for layout */
+    .container {
+        max-width: 1200px; /* Adjust max-width as needed */
+        margin: 0 auto; /* Center the container horizontally */
+        padding: 20px; /* Add padding for spacing */
+        background-image: url('path_to_your_image.jpg'); /* Add your background image path here */
+        background-size: cover; /* Cover the entire container with the background image */
+        background-position: center; /* Center the background image */
+    }
+
+    .form-group {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .form-holder {
+        flex: 1;
+        margin-right: 15px; /* Adjust spacing between form elements */
+    }
+
+    /* Adjust width of form fields */
+    .form-holder:nth-child(odd) {
+        flex-basis: calc(40% - 15px); /* 40% width minus margin */
+    }
+
+    .form-holder:nth-child(even) {
+        flex-basis: calc(60% - 15px); /* 60% width minus margin */
+    }
+
+    /* Increase height of description and objective fields */
+    .form-holder:nth-child(6),
+    .form-holder:nth-child(7) {
+        flex-basis: calc(100% - 15px); /* 100% width minus margin */
+    }
+
+    /* Clearfix for wrapping */
+    .form-group::after {
+        content: '';
+        flex: auto;
+    }
+</style>
+
 </head>
 <body>
-    <h1>Add Event</h1>
-    {{ form_start(form) }}
+<div class="container">
+    <div class="wrapper">
+        <form action="" id="wizard" method="post">
+            <h4></h4>
+            <section>
+                <div class="inner">
+                    <a href="#" class="avartar">
+                        <h1>Add Event</h1>
+                    </a>
+                    <div class="form-group">
+                        <div class="form-holder">
+                            {{ form_label(form.eventName) }}
+                            {{ form_widget(form.eventName, {'attr': {'class': 'form-control', 'placeholder': 'Event Name'}}) }}
+                        </div>
+                        <div class="form-holder">
+                            {{ form_label(form.address) }}
+                            {{ form_widget(form.address, {'attr': {'class': 'form-control', 'placeholder': 'Address'}}) }}
+                        </div>
+                        <div class="form-holder">
+                            {{ form_label(form.date) }}
+                            {{ form_widget(form.date, {'attr': {'class': 'form-control', 'placeholder': 'Date'}}) }}
+                        </div>
+                        <div class="form-holder">
+                            {{ form_label(form.time) }}
+                            {{ form_widget(form.time, {'attr': {'class': 'form-control', 'placeholder': 'Time'}}) }}
+                        </div>
+                        <div class="form-holder">
+                            {{ form_label(form.location) }}
+                            {{ form_widget(form.location, {'attr': {'class': 'form-control', 'placeholder': 'Location'}}) }}
+                        </div>
+                        <div class="form-holder">
+                            {{ form_label(form.image) }}
+                            {{ form_widget(form.image, {'attr': {'class': 'form-control', 'placeholder': 'Image'}}) }}
+                        </div>
+                        <div class="form-holder">
+                            {{ form_label(form.objective) }}
+                            {{ form_widget(form.objective, {'attr': {'class': 'form-control', 'placeholder': 'Objective'}}) }}
+                        </div>
+                        <div class="form-holder">
+                            {{ form_label(form.description) }}
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Description'}}) }}
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div style="display: flex; justify-content: center; margin-top: 20px;">
+        <div class="form-group">
+            {{ form_widget(form.submit, {'attr': {'class': 'btn btn-success'}}) }}
+        </div>
+    </div>
+        </form>
+    </div>
+</div>
 
-
-    
-
-
-    {{ form_end(form) }}
 </body>
 </html>
+{% endblock %}

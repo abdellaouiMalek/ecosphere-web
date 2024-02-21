@@ -70,13 +70,12 @@ class EventsController extends AbstractController
     {
     $entityManager = $this->managerRegistry->getManager();
     $event = $entityManager->getRepository(Event::class)->find($id);
-
-    // Remove the event from the database
     $entityManager->remove($event);
     $entityManager->flush();
     return $this->redirectToRoute('app_events');
     }
 
+    
     #[Route('/update-event/{id}', name: 'app_update_event')]
     public function updateEvent(Request $request, $id): Response
     {
@@ -85,16 +84,11 @@ class EventsController extends AbstractController
 
     // Create the update form and populate it with event's current information
     $form = $this->createForm(EventFormType::class, $event);
-
-    // Handle form submission
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
-        // Update the event in the database
         $entityManager->flush();
         return $this->redirectToRoute('app_events');
     }
-
-    // Render the update event form template
     return $this->render('events/update_event.html.twig', [
         'form' => $form->createView(),
         'formTitle' => 'Update Event',
