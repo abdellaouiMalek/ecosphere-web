@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %} {% block content %}
+
+<section id="community-events" class="text-center py-5">
+  <div class="container">
+    <h2 class="section-title">Community Events</h2>
+    <p class="section-description">Discover upcoming events in our community.</p>
+  </div>
+</section>
+
+<div class="bg-primary text-white p-4 mb-3 text-center">
+    <p class="lead mb-0">Have an event to suggest? Click below to add it and fill the form with the necessary details!</p>
+    <a href="{{ path('app_add_event') }}" class="btn btn-light mt-3">Add Event</a>
+  </div>
+<div class="container" style="margin-bottom: 30px;">
+  <!-- Add Event Context -->
+  
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for event in events %}
+    <div class="col">
+        <div class="card h-100 shadow position-relative">
+            <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp" class="card-img-top" alt="Hollywood Sign on The Hill"/>
+            <div class="card-body position-relative">
+                <!-- Date Container -->
+                <div class="date-container bg-success text-white p-2 position-absolute top-0 start-0">
+                    <p class="mb-0">{{ event.date|date('m/d/Y') }}</p>
+                </div>
+                <h5 class="card-title" style="margin-top: 40px;">{{ event.eventName }}</h5>
+                
+                <p class="card-text">
+                    <p><strong>Location:</strong> {{ event.location }}</p>
+                    <p>{{ event.description }}</p>
+                </p>
+                <!-- More Details Link -->
+                <a href="{{ path('more_details', {id:event.id}) }}" class="position-absolute bottom-0 start-0 p-3 text-decoration-none">More Details</a>
+            </div>
+            <!-- Edit and Delete Event Buttons -->
+            <div class="position-absolute bottom-0 end-0 p-2">
+                <button class="btn btn-primary me-2 updateEventBtn" data-event-id="{{ event.id }}">Edit</button>
+                <a href="{{ path('app_delete_event', {id:event.id}) }}" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+        // Add event listener to update event buttons
+        const updateButtons = document.querySelectorAll('.updateEventBtn');
+        updateButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Get the event ID from the data attribute
+                const eventId = this.getAttribute('data-event-id');
+                // Redirect to the update-event page with the event ID
+                window.location.href = '/update-event/' + eventId;
+            });
+        });
+    </script>
+{% endblock %} 
