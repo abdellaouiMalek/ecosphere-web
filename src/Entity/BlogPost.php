@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\BlogPostRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BlogPostRepository::class)]
 class BlogPost
@@ -15,16 +16,20 @@ class BlogPost
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:" Ecrire votre contenu !")]
     private ?string $content = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $pubDate = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:" Veuillez Entrer le Titre Svp !")]
+    #[Assert\Type("string",message:"The value {{ value }} is not a valid {{ type }}.")]
+
     private ?string $title = null;
 
     #[ORM\ManyToOne(inversedBy: 'blogPost')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: False)]
     private ?User $user = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
@@ -109,4 +114,10 @@ class BlogPost
 
         return $this;
     }
+        // Implement the __toString() method
+        public function __toString()
+        {
+            return $this->getUser(); // Assuming getUsername() returns the username
+        }
+    
 }

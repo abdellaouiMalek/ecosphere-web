@@ -321,4 +321,10 @@ class User
 
         return $this;
     }
+        // Implement the __toString() method
+        public function __toString()
+        {
+            return $this->getId(); // Assuming getUsername() returns the username
+        }
+    
 }
