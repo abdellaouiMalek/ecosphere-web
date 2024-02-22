@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carpooling{% endblock %}
+
+{% block body %}
+
+    <h1>Carpooling</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ carpooling.id }}</td>
+            </tr>
+            <tr>
+                <th>DepartureDate</th>
+                <td>{{ carpooling.departureDate ? carpooling.departureDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>ArrivalDate</th>
+                <td>{{ carpooling.arrivalDate ? carpooling.arrivalDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DaparturePlace</th>
+                <td>{{ carpooling.daparturePlace }}</td>
+            </tr>
+            <tr>
+                <th>ArrivalPlace</th>
+                <td>{{ carpooling.arrivalPlace }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ carpooling.price }}</td>
+            </tr>
+            <tr>
+                <th>Time</th>
+                <td>{{ carpooling.time ? carpooling.time|date('H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_carpooling_index') }}">back to list</a>
+
+    <a href="{{ path('app_carpooling_edit', {'id': carpooling.id}) }}">edit</a>
+
+    {{ include('carpooling/_delete_form.html.twig') }}
+{% endblock %}

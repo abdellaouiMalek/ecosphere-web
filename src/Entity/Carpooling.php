@@ -33,8 +33,8 @@ class Carpooling
     private ?\DateTimeInterface $time = null;
 
     #[ORM\ManyToOne(inversedBy: 'carpooling')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $user ;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?CarpoolingRequest $carpooling_request = null;

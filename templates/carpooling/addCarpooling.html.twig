@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Carpooling{% endblock %}
+
+{% block body %}
+    <h1>Create new Carpooling</h1>
+
+    {{ form(form) }}
+    <a href="{{ path('app_carpooling_index') }}">back to list</a>
+{% endblock %}
