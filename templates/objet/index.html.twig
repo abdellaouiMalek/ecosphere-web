@@ -8,13 +8,13 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Type</th>
-                <th>Picture</th>
-                <th>Age</th>
-                <th>Historique</th>
-                <th>Description</th>
-                <th>actions</th>
+                <th>Name</th><br>
+                <th>Type</th><br>
+                <th>Picture</th><br>
+                <th>Age</th><br>
+                <th>History</th><br>
+                <th>Description</th><br>
+                <th>actions</th><br>
             </tr>
         </thead>
         <tbody>
@@ -22,7 +22,7 @@
             <tr>
                 <td>{{ objet.id }}</td>
                 <td>{{ objet.Type }}</td>
-                <td>{{ objet.Picture }}</td>
+                <td> <img src="{{asset('uploads/' ~objet.Picture )}}" alt="{{activite.image}}" width="50" height="50"></td>
                 <td>{{ objet.Age }}</td>
                 <td>{{ objet.historique }}</td>
                 <td>{{ objet.description }}</td>
@@ -40,5 +40,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_objet_new') }}">Create new</a>
+    <a href="{{ path('app_objet_new') }}"class="btn btn-primary">Create new</a>
 {% endblock %}

@@ -12,16 +12,16 @@
                 <td>{{ objet.id }}</td>
             </tr>
             <tr>
-                <th>Nom</th>
-                <td>{{ objet.nom }}</td>
-            </tr>
-            <tr>
                 <th>Type</th>
                 <td>{{ objet.Type }}</td>
             </tr>
             <tr>
                 <th>Picture</th>
-                <td>  <img src="{{asset('uploads/' ~objet.Picture)}}" alt="{{objet.image}}"> </td>
+                <td>{{ objet.Picture }}</td>
+            </tr>
+            <tr>
+                <th>Upload</th>
+                <td>{{ objet.upload }}</td>
             </tr>
             <tr>
                 <th>Age</th>
@@ -35,12 +35,13 @@
                 <th>Description</th>
                 <td>{{ objet.description }}</td>
             </tr>
+            <tr>
+                <th>Nom_o</th>
+                <td>{{ objet.nomO }}</td>
+            </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_objet_index') }}"class="btn btn-secondary">back to list</a>
+    <a href="{{ path('app_objet_frontt_index') }}">back to list</a>
 
-    <a href="{{ path('app_objet_edit', {'id': objet.id}) }}"class="btn btn-primary">edit</a>
-
-    {{ include('objet/_delete_form.html.twig') }}
 {% endblock %}

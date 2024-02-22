@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a6a7f047ad87927c3438dc78b305cb47",
+    "content-hash": "6b3f600a96054d8ed5726af491ff152a",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1535,6 +1535,52 @@
                 "source": "https://github.com/schmittjoh/metadata/tree/2.8.0"
             },
             "time": "2023-02-15T13:44:18+00:00"
+        },
+        {
+            "name": "mercuryseries/flashy-bundle",
+            "version": "v5.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mercuryseries/flashy-bundle.git",
+                "reference": "9d89512068c310eb1e3b2670a59197b6a2d67b63"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mercuryseries/flashy-bundle/zipball/9d89512068c310eb1e3b2670a59197b6a2d67b63",
+                "reference": "9d89512068c310eb1e3b2670a59197b6a2d67b63",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0",
+                "symfony/config": "^4.4 || ^5.3 || ^6.0",
+                "symfony/dependency-injection": "^4.4 || ^5.3 || ^6.0",
+                "symfony/http-kernel": "^4.4 || ^5.3 || ^6.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^4.4 || ^5.3 || ^6.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "MercurySeries\\FlashyBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Honore Hounwanou",
+                    "email": "mercuryseries@gmail.com"
+                }
+            ],
+            "description": "Easy flash notifications in Symfony",
+            "support": {
+                "issues": "https://github.com/mercuryseries/flashy-bundle/issues",
+                "source": "https://github.com/mercuryseries/flashy-bundle/tree/v5.1.0"
+            },
+            "time": "2022-03-27T04:24:03+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -6726,16 +6772,16 @@
         },
         {
             "name": "symfony/stimulus-bundle",
-            "version": "v2.14.2",
+            "version": "v2.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/stimulus-bundle.git",
-                "reference": "f775f6e811215156bfe41e6be234272d0c27e02b"
+                "reference": "c113ab8e92c6b14659f6be4e9bef5c1f4c4a000e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/stimulus-bundle/zipball/f775f6e811215156bfe41e6be234272d0c27e02b",
-                "reference": "f775f6e811215156bfe41e6be234272d0c27e02b",
+                "url": "https://api.github.com/repos/symfony/stimulus-bundle/zipball/c113ab8e92c6b14659f6be4e9bef5c1f4c4a000e",
+                "reference": "c113ab8e92c6b14659f6be4e9bef5c1f4c4a000e",
                 "shasum": ""
             },
             "require": {
@@ -6745,7 +6791,7 @@
                 "symfony/deprecation-contracts": "^2.0|^3.0",
                 "symfony/finder": "^5.4|^6.0|^7.0",
                 "symfony/http-kernel": "^5.4|^6.0|^7.0",
-                "twig/twig": "^2.15.3|^3.4.3"
+                "twig/twig": "^2.15.3|~3.8.0"
             },
             "require-dev": {
                 "symfony/asset-mapper": "^6.3|^7.0",
@@ -6775,7 +6821,7 @@
                 "symfony-ux"
             ],
             "support": {
-                "source": "https://github.com/symfony/stimulus-bundle/tree/v2.14.2"
+                "source": "https://github.com/symfony/stimulus-bundle/tree/v2.15.0"
             },
             "funding": [
                 {
@@ -6791,7 +6837,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-07T20:26:48+00:00"
+            "time": "2024-02-14T16:26:57+00:00"
         },
         {
             "name": "symfony/stopwatch",
@@ -7329,16 +7375,16 @@
         },
         {
             "name": "symfony/ux-turbo",
-            "version": "v2.14.2",
+            "version": "v2.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/ux-turbo.git",
-                "reference": "7cd466f33950aa82a2b7e1485d62d8da726a0051"
+                "reference": "d3590a43fee73304855dfc8022ccb57b0df9f03d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ux-turbo/zipball/7cd466f33950aa82a2b7e1485d62d8da726a0051",
-                "reference": "7cd466f33950aa82a2b7e1485d62d8da726a0051",
+                "url": "https://api.github.com/repos/symfony/ux-turbo/zipball/d3590a43fee73304855dfc8022ccb57b0df9f03d",
+                "reference": "d3590a43fee73304855dfc8022ccb57b0df9f03d",
                 "shasum": ""
             },
             "require": {
@@ -7405,7 +7451,7 @@
                 "turbo-stream"
             ],
             "support": {
-                "source": "https://github.com/symfony/ux-turbo/tree/v2.14.2"
+                "source": "https://github.com/symfony/ux-turbo/tree/v2.15.0"
             },
             "funding": [
                 {
@@ -7421,7 +7467,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-07T20:26:48+00:00"
+            "time": "2024-02-20T16:11:17+00:00"
         },
         {
             "name": "symfony/validator",

@@ -6,27 +6,37 @@ use App\Repository\ObjetRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 #[ORM\Entity(repositoryClass: ObjetRepository::class)]
+
 class Objet
-{
+{   /**
+    * @Groups("objets")
+    */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-/**
+    /**
      * @Assert\NotBlank(message="Type ne doit pas être vide.")
-     
-     */
+    */
     #[ORM\Column(length: 255)]
     private ?string $Type = null;
+    /**
+     * @Groups("objets")
+    */
 
     #[ORM\Column(length: 255)]
     private ?string $Picture = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $upload= null;
+    
   /**
      * @ORM\Column
-     * @Assert\NotBlank(message="L'âge ne peut pas être vide")
      * @Assert\Type(type="integer", message="L'âge doit être un nombre entier")
      * @Assert\GreaterThan(value=0, message="L'âge doit être supérieur à zéro")
      */
@@ -36,19 +46,34 @@ class Objet
 
     #[ORM\Column(length: 255)]
     private ?string $historique = null;
- /**
+
+    #[ORM\Column(length: 255)]
+     /**
      * @Assert\NotBlank(message="La description ne doit pas être vide.")
      * @Assert\Type("string", message="La valeur {{ value }} n'est pas une chaîne de caractères valide.")
      * @Assert\Length(
      *      max = 255,
      *      maxMessage = "La description ne doit pas dépasser {{ limit }} caractères."
      * )
+     * @Groups("objets")
      */
-    #[ORM\Column(length: 255)]
     private ?string $description = null;
 
     #[ORM\OneToMany(mappedBy: 'Objet', targetEntity: Historique::class)]
     private Collection $Historique;
+
+    #[ORM\Column(length: 255)]
+    /**
+     * @Assert\NotBlank(message="nom ne doit pas être vide.")
+     * @Assert\Type("string", message="La valeur {{ value }} n'est pas une chaîne de caractères valide.")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "nom ne doit pas dépasser {{ limit }} caractères."
+     * )
+
+     
+    */
+    private ?string $nom_o = null;
 
     public function __construct()
     {
@@ -58,6 +83,18 @@ class Objet
     public function getId(): ?int
     {
         return $this->id;
+    }
+    
+    public function getNom(): ?int
+    {
+        return $this->Nom;
+    }
+
+    public function setNom(string $Nom): static
+    {
+        $this->Nom = $Nom;
+
+        return $this;
     }
 
     public function getType(): ?string
@@ -83,6 +120,7 @@ class Objet
 
         return $this;
     }
+
 
     public function getAge(): ?int
     {
@@ -138,6 +176,18 @@ class Objet
                 $historique->setObjet(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNomO(): ?string
+    {
+        return $this->nom_o;
+    }
+
+    public function setNomO(string $nom_o): static
+    {
+        $this->nom_o = $nom_o;
 
         return $this;
     }

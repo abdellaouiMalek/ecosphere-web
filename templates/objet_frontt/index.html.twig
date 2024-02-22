@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Objet index{% endblock %}
+
+{% block body %}
+    <section class="container">
+
+        {% for objet in objets %}
+            <a href="{{ path('app_objet_frontt_show', {'id': objet.id}) }}">
+            <div class="card card1">
+             <div class="card-img" ></div>
+             <div class="card-text">
+                <h2>{{ objet.nomO }}</h2>
+                <p>{{ objet.description }}<p>
+                <p>{{ objet.historique }}<p>
+            </div>    
+            <div class="card-stats">
+                <div class="stat">     
+                        <div class="type">View Centre
+                        </div>
+                </div>
+
+             </div>
+
+            </div>
+            </a>
+        {% endfor %}
+    </section>
+   
+{% endblock %}

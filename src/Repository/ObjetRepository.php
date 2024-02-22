@@ -21,6 +21,24 @@ class ObjetRepository extends ServiceEntityRepository
         parent::__construct($registry, Objet::class);
     }
 
+    public function save(Objet $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function remove(Objet $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
 //    /**
 //     * @return Objet[] Returns an array of Objet objects
 //     */

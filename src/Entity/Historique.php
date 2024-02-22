@@ -16,10 +16,14 @@ class Historique
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $initialCondition = null;
+       /**
+     * @Assert\NotBlank(message=" le nom doit etre non vide")
+    *@Assert\Type("string",message="The value {{ value }} is not a valid {{ type }}.")
+    */
+    private ?string $nom_O = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $arrivalState = null;
+    private ?string $initialCondition = null;
 
     #[ORM\ManyToOne(inversedBy: 'Historique')]
     private ?Objet $objet = null;
@@ -45,17 +49,6 @@ class Historique
         return $this;
     }
 
-    public function getArrivalState(): ?string
-    {
-        return $this->arrivalState;
-    }
-
-    public function setArrivalState(string $arrivalState): static
-    {
-        $this->arrivalState = $arrivalState;
-
-        return $this;
-    }
 
     public function getObjet(): ?Objet
     {
@@ -77,6 +70,18 @@ class Historique
     public function setDate(\DateTimeInterface $date): static
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getNomO(): ?string
+    {
+        return $this->nom_O;
+    }
+
+    public function setNomO(string $nom_O): static
+    {
+        $this->nom_O = $nom_O;
 
         return $this;
     }

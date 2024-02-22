@@ -11,19 +11,19 @@
                 <th>Id</th>
                 <td>{{ historique.id }}</td>
             </tr>
-           
+           <tr>
+                <th>Nom</th>
+                <td>{{ historique.nom_o}}</td>
+            </tr>
             <tr>
                 <th>InitialCondition</th>
                 <td>{{ historique.initialCondition }}</td>
             </tr>
-            <tr>
-                <th>ArrivalState</th>
-                <td>{{ historique.arrivalState }}</td>
-            </tr>
+            
         </tbody>
     </table>
 
-    <a href="{{ path('app_historique_index') }}">back to list</a>
+    <a href="{{ path('app_historique_index') }}">back</a>
 
     <a href="{{ path('app_historique_edit', {'id': historique.id}) }}">edit</a>
 

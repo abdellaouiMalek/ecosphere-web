@@ -9,8 +9,9 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Name</th>
                 <th>InitialCondition</th>
-                <th>ArrivalState</th>
+                <th>Date</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -19,7 +20,6 @@
             <tr>
                 <td>{{ historique.id }}</td>
                 <td>{{ historique.initialCondition }}</td>
-                <td>{{ historique.arrivalState }}</td>
                 <td>
                     <a href="{{ path('app_historique_show', {'id': historique.id}) }}"class="btn btn-danger">show</a>
                     <a href="{{ path('app_historique_edit', {'id': historique.id}) }}"class="btn btn-warning">edit</a>
