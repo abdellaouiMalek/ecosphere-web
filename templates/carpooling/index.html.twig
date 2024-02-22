@@ -5,53 +5,56 @@
 
 {% block body %}
 
-<div class="site-section bg-light">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-7">
-				<h2 class="section-heading">
-					<strong>Carpooling Listings</strong>
-				</h2>
-				<p class="mb-5">Here you can find your carpool postings.</p>
+	<div class="site-section bg-light">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-7">
+					<h2 class="section-heading">
+						<strong>Carpooling Listings</strong>
+					</h2>
+					<p class="mb-5">Here you can find your carpool postings.</p>
+				</div>
 			</div>
-		</div>
 
-		<div class="row">
-			{% for carpooling in carpoolings %}
-				<div class="col-md-6 col-lg-4 mb-4">
-					<div class="listing d-block  align-items-stretch">
-						<div class="listing-img h-100 mr-4">
-							<img src="images/car_6.jpg" alt="Image" class="img-fluid">
-						</div>
-						<div class="listing-contents h-100">
-							<h3>To {{ carpooling.arrivalPlace}}</h3>
-							<div class="rent-price">
-								<strong>{{ carpooling.price }}</strong>
-								<span class="mx-1">/</span>DT
+			<div class="row">
+				{% for carpooling in carpoolings %}
+					<div class="col-md-6 col-lg-4 mb-4">
+						<div class="listing d-block  align-items-stretch">
+							<div class="listing-img h-100 mr-4">
+								<img src="images/car_6.jpg" alt="Image" class="img-fluid">
 							</div>
-							<div class="d-block d-md-flex mb-3 border-bottom pb-3">
-								<div class="listing-feature pr-4">
-									<span class="caption">From
-										{{ carpooling.daparturePlace }}</span>
+							<div class="listing-contents h-100">
+								<h3>To
+									{{ carpooling.arrivalPlace}}</h3>
+								<div class="rent-price">
+									<strong>{{ carpooling.price }}</strong>
+									<span class="mx-1">/</span>DT
 								</div>
-							</div>
-							<div>
-								<p>The 
-									{{carpooling.departureDate ? carpooling.departureDate|date('Y-m-d') : ''  }}
-									at
-									{{ carpooling.time ? carpooling.time|date('H:i:s') : '' }}</p>
-								<p>
-									<a href="{{ path('app_carpooling_show', {'id': carpooling.id}) }}" class="btn btn-primary btn-sm">
-										show</a>
-								</p>
-								<p>
-									<a href="{{ path('app_carpooling_edit', {'id': carpooling.id}) }}" class="btn btn-primary btn-sm">
-										edit</a>
-								</p>
+								<div class="d-block d-md-flex mb-3 border-bottom pb-3">
+									<div class="listing-feature pr-4">
+										<span class="caption">From
+											{{ carpooling.daparturePlace }}</span>
+									</div>
+								</div>
+								<div>
+									<p>The
+										{{carpooling.departureDate ? carpooling.departureDate|date('Y-m-d') : ''  }}
+										at
+										{{ carpooling.time ? carpooling.time|date('H:i:s') : '' }}</p>
+									<p>
+										<a href="{{ path('app_carpooling_show', {'id': carpooling.id}) }}" class="btn btn-primary btn-sm">
+											show</a>
+									</p>
+									<p>
+										<a href="{{ path('app_carpooling_edit', {'id': carpooling.id}) }}" class="btn btn-primary btn-sm">
+											edit</a>
+									</p>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			{% endfor %}
-			
-{% endblock %}
+				{% endfor %}
+				<a href="{{ path('app_carpooling_new')}}" class="btn btn-primary btn-sm">add new
+				</a>
+
+			{% endblock %}

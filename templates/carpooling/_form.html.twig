@@ -1,4 +1,11 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+{{ form_row(form.daparturePlace, {'attr': {'class': 'form-control mb-3'}}) }}
+{{ form_row(form.arrivalPlace, {'attr': {'class': 'form-control mb-3'}}) }}
+{{ form_row(form.price, {'attr': {'class': 'form-control mb-3'}}) }}
+{{ form_row(form.time, {'attr': {'class': 'form-control mb-3'}}) }}
+{{ form_row(form.departureDate, {'attr': {'class': 'form-control mb-3'}}) }}
+
+<button type="submit" class="btn btn-primary">{{ button_label }}</button>
+
 {{ form_end(form) }}

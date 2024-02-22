@@ -15,14 +15,12 @@ class CarpoolingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('departureDate' , DateType::class)
-            ->add('arrivalDate' , DateType::class)
             ->add('daparturePlace')
             ->add('arrivalPlace')
             ->add('price')
-            ->add('time' , TimeType::class)
-            ->add('submit' , SubmitType::class)
-        ;
+            ->add('time', TimeType::class)
+            ->add('departureDate', DateType::class)
+            ->add('submit', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -3,8 +3,32 @@
 {% block title %}New Carpooling{% endblock %}
 
 {% block body %}
-    <h1>Create new Carpooling</h1>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ block('title') }}</div>
 
-    {{ form(form) }}
-    <a href="{{ path('app_carpooling_index') }}">back to list</a>
+                <div class="card-body">
+                    <form method="post">
+                        {{ form_start(form) }}
+
+                        {{ form_row(form.daparturePlace, {'attr': {'class': 'form-control mb-3'}}) }}
+                        {{ form_row(form.arrivalPlace, {'attr': {'class': 'form-control mb-3'}}) }}
+                        {{ form_row(form.price, {'attr': {'class': 'form-control mb-3'}}) }}
+                        {{ form_row(form.time, {'attr': {'class': 'form-control mb-3'}}) }}
+                        {{ form_row(form.departureDate, {'attr': {'class': 'form-control mb-3'}}) }}
+
+                        <div class="text-center">
+                            {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary mr-2'}}) }}
+                            <a href="{{ path('app_carpooling_index') }}" class="btn btn-secondary">Cancel</a>
+                        </div>
+
+                        {{ form_end(form) }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
