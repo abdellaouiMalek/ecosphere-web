@@ -48,6 +48,7 @@
 
 </head>
 <body>
+{{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }}
 <div class="container">
     <div class="wrapper">
         <form action="" id="wizard" method="post">
@@ -101,6 +102,7 @@
         </form>
     </div>
 </div>
+{{ form_end(form) }}
 
 </body>
 </html>

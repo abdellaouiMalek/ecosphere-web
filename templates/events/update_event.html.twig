@@ -48,16 +48,15 @@
 
 </head>
 <body>
+{{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }}
 <div class="container">
-    <!-- Form -->
     <div class="wrapper">
         <form action="" id="wizard" method="post">
-            <!-- SECTION 1 -->
             <h4></h4>
             <section>
                 <div class="inner">
                     <a href="#" class="avartar">
-                        <h1>Update Event</h1>
+                        <h1>Add Event</h1>
                     </a>
                     <div class="form-group">
                         <div class="form-holder">
@@ -95,24 +94,16 @@
                     </div>
                 </div>
             </section>
-
-            <!-- SECTION 2 -->
-            <!-- You can add more sections as needed -->
-
-            <!-- Submit button -->
-            <div class="form-group">
-                {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
-            </div>
+            <div style="display: flex; justify-content: center; margin-top: 20px;">
+        <div class="form-group">
+            {{ form_widget(form.submit, {'attr': {'class': 'btn btn-success'}}) }}
+        </div>
+    </div>
         </form>
     </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <!-- Footer content here -->
-    </footer>
 </div>
+{{ form_end(form) }}
 
-<!-- Template created and distributed by Colorlib -->
 </body>
 </html>
 {% endblock %}

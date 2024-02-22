@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<body>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h1 class="text-center text-primary"><i class="bi bi-calendar"></i> {{ event.eventName }}</h1>
+            
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <div class="row align-items-stretch">
+        <div class="col-md-6">
+            <div class="card h-100 shadow">
+                <div class="card-body">
+                    <h2 class="card-title"><i class="bi bi-geo-alt"></i> Address:</h2>
+                    <p class="card-text">{{ event.address }}</p>
+                    <h2 class="card-title"><i class="bi bi-calendar"></i> Date:</h2>
+                    <p class="card-text">{{ event.date ? event.date|date('F j, Y') : '' }}</p>
+                    <h2 class="card-title"><i class="bi bi-clock"></i> Time:</h2>
+                    <p class="card-text">{{ event.time ? event.time|date('H:i') : '' }}</p>
+                    <h2 class="card-title"><i class="bi bi-geo-alt"></i> Location:</h2>
+                    <p class="card-text">{{ event.location }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <img src="https://www.enel.com/content/dam/enel-com/immagini/master-azienda_2400x1160/storie_2400x1160/world-environment-day-2023_2400x1160.jpg" alt="Event Image" class="img-fluid rounded mx-auto d-block h-100"> 
+        </div>
+    </div>
+</div>
+
+        <div class="container mb-5">
+            <div class="row">
+               <div class="card shadow">
+                 <div class="card-body">
+                    <h2 class="card-title"><i class="bi bi-flag"></i> Objective:</h2>
+                    <p class="card-text">{{ event.objective }}</p>
+                    <h2 class="card-title"><i class="bi bi-card-text"></i> Description:</h2>
+                    <p class="card-text">{{ event.description }}</p>
+                  </div>
+               </div>
+            </div>
+        </div>
+
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <p class="lead">Want to participate? Enroll here!</p>
+            <a href="#" class="btn btn-primary btn-lg">Enroll</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+{% endblock %}
