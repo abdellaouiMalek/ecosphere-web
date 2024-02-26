@@ -62,34 +62,45 @@
                         <div class="form-holder">
                             {{ form_label(form.eventName) }}
                             {{ form_widget(form.eventName, {'attr': {'class': 'form-control', 'placeholder': 'Event Name'}}) }}
+                            {{ form_errors(form.eventName) }}
                         </div>
                         <div class="form-holder">
                             {{ form_label(form.address) }}
                             {{ form_widget(form.address, {'attr': {'class': 'form-control', 'placeholder': 'Address'}}) }}
+                            {{ form_errors(form.address) }}
+
                         </div>
                         <div class="form-holder">
                             {{ form_label(form.date) }}
                             {{ form_widget(form.date, {'attr': {'class': 'form-control', 'placeholder': 'Date'}}) }}
+                            {{ form_errors(form.date) }}
+                           
                         </div>
                         <div class="form-holder">
                             {{ form_label(form.time) }}
                             {{ form_widget(form.time, {'attr': {'class': 'form-control', 'placeholder': 'Time'}}) }}
+                            {{ form_errors(form.time) }}
+
                         </div>
                         <div class="form-holder">
                             {{ form_label(form.location) }}
                             {{ form_widget(form.location, {'attr': {'class': 'form-control', 'placeholder': 'Location'}}) }}
+                            {{ form_errors(form.location) }}
+
                         </div>
                         <div class="form-holder">
-                            {{ form_label(form.image) }}
-                            {{ form_widget(form.image, {'attr': {'class': 'form-control', 'placeholder': 'Image'}}) }}
+                            {{ form_row(form.picture, {'attr': {'class': 'form-control', 'placeholder': 'Image'}}) }}
                         </div>
                         <div class="form-holder">
                             {{ form_label(form.objective) }}
                             {{ form_widget(form.objective, {'attr': {'class': 'form-control', 'placeholder': 'Objective'}}) }}
+                            {{ form_errors(form.objective) }}
                         </div>
                         <div class="form-holder">
                             {{ form_label(form.description) }}
                             {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Description'}}) }}
+                            {{ form_errors(form.description) }}
+
                         </div>
                     </div>
                 </div>

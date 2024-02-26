@@ -30,8 +30,13 @@
             </div>
         </div>
         <div class="col-md-6">
-            <img src="https://www.enel.com/content/dam/enel-com/immagini/master-azienda_2400x1160/storie_2400x1160/world-environment-day-2023_2400x1160.jpg" alt="Event Image" class="img-fluid rounded mx-auto d-block h-100"> 
-        </div>
+    {% if event.image %}
+        <img src="{{ asset('public/uploads/images' ~ event.image) }}" alt="Event Image" class="img-fluid rounded mx-auto d-block h-100"> 
+    {% else %}
+        <p>No image available</p>
+    {% endif %}
+</div>
+
     </div>
 </div>
 
