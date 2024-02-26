@@ -11,6 +11,12 @@ use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
+
+
+
+
 
 
 
@@ -33,12 +39,18 @@ class EventFormType extends AbstractType
             ])
             ->add('date',DateType::class, [
                 'constraints' => [
-                    new NotBlank(),
+                    new GreaterThanOrEqual([
+                        'value' => 'today',
+                        'message' => 'Please enter a valid date.',
+                    ]),
                 ],
             ])
             ->add('time',TimeType::class, [
                 'constraints' => [
-                    new NotBlank(),
+                    new GreaterThanOrEqual(['value' => '08:00',
+                    'message' => 'Please enter a valid date.',]), 
+                    new LessThanOrEqual(['value' => '18:00',
+                    'message' => 'Please enter a valid date.',]),
                 ],
             ])
             ->add('location',TextType::class, [
