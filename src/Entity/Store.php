@@ -35,7 +35,10 @@ class Store
         $this->users = new ArrayCollection();
         $this->product = new ArrayCollection();
     }
-
+    public function __tostring():string
+    {
+        return $this->StoreName;
+    }
     public function getId(): ?int
     {
         return $this->id;
