@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\EventRepository;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-
+use Knp\Component\Pager\PaginatorInterface;
 
 class EventsController extends AbstractController
 {
@@ -25,9 +25,11 @@ class EventsController extends AbstractController
     }
 
     #[Route('/events', name: 'app_events')]
-    public function index(EventRepository $eventRepository): Response
+    public function index(EventRepository $eventRepository, PaginatorInterface $paginatorInterface, Request $request): Response
     {
         $events = $eventRepository->findAll();
+        $events = $paginatorInterface->paginate($events, $request->query->getInt('page',1),8);
+
         return $this->render('events/eventsHomePage.html.twig', [
             'events' => $events,
         ]);
