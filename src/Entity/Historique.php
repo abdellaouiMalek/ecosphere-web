@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use DateTimeInterface;
 use App\Repository\HistoriqueRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,7 +20,7 @@ class Historique
      * @Assert\NotBlank(message=" le nom doit etre non vide")
     *@Assert\Type("string",message="The value {{ value }} is not a valid {{ type }}.")
     */
-    private ?string $nom_O = null;
+    private ?string $nom_o = null;
 
     #[ORM\Column(length: 255)]
     private ?string $initialCondition = null;
@@ -29,7 +29,12 @@ class Historique
     private ?Objet $objet = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date;
+    
+
 
     public function getId(): ?int
     {
@@ -67,22 +72,23 @@ class Historique
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): static
+    public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
 
         return $this;
     }
-
-    public function getNomO(): ?string
+    public function getNomo(): ?string
     {
-        return $this->nom_O;
+        return $this->nom_o;
     }
 
-    public function setNomO(string $nom_O): static
+    public function setNomo(string $nom_o): static
     {
-        $this->nom_O = $nom_O;
+        $this->nom_o = $nom_o;
 
         return $this;
     }
+
+
 }

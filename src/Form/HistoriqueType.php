@@ -32,7 +32,7 @@ class HistoriqueType extends AbstractType
                     'Bad' => 'Bad',
                 ],
                 ] )
-
+            
     
         
         ;

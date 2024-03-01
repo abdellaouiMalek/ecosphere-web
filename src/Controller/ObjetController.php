@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controller;
-
 use App\Entity\Objet;
 use App\Form\ObjetType;
 use App\Repository\ObjetRepository;
@@ -12,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
-use App\Form\EditformType;
+use Doctrine\Persistence\ManagerRegistry;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 
 #[Route('/objet')]
@@ -49,7 +48,8 @@ class ObjetController extends AbstractController
             $entityManager->persist($objet);
             $entityManager->flush();
             $flashy->success('Objet Ajouter !');
-            return $this->redirectToRoute('app_objet_index', [], Response::HTTP_SEE_OTHER);
+             return $this->redirectToRoute('app_objet_index', [], Response::HTTP_SEE_OTHER);
+            //return $this->redirectToRoute('app_historique_new', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('objet/new.html.twig', [
@@ -69,7 +69,7 @@ class ObjetController extends AbstractController
     #[Route('/{id}/edit', name: 'app_objet_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Objet $objet,ObjetRepository $ObjetRepository): Response
     {
-        $form = $this->createForm(EditformType::class, $objet);
+        $form = $this->createForm(ObjetType::class, $objet);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -92,7 +92,7 @@ class ObjetController extends AbstractController
                 $objet->setPicture($newFilename);
             }
     
-            $objetRepository->save($objet, true);
+            $ObjetRepository->save($objet, true);
 
             return $this->redirectToRoute('app_objet_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -104,12 +104,13 @@ class ObjetController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_objet_delete', methods: ['POST'])]
-    public function delete(Request $request, Objet $objet, ObjetRepository $ObjetRepository): Response
+    public function delete(ManagerRegistry $managerRegistry, ObjetRepository $ObjetRepository,$id)
     {
-        if ($this->isCsrfTokenValid('delete'.$objet->getId(), $request->request->get('_token'))) {
-            $ObjetRepository->remove($objet);
-            $ObjetRepository->flush();
-        }
+        $objet= $ObjetRepository->find($id);
+        $em= $managerRegistry->getManager();
+
+        $em->remove($objet);
+        $em->flush();
 
         return $this->redirectToRoute('app_objet_index', [], Response::HTTP_SEE_OTHER);
     }

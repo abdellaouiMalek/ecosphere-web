@@ -12,7 +12,6 @@
                 <th>Type</th><br>
                 <th>Picture</th><br>
                 <th>Age</th><br>
-                <th>History</th><br>
                 <th>Description</th><br>
                 <th>actions</th><br>
             </tr>
@@ -20,16 +19,16 @@
         <tbody>
         {% for objet in objets %}
             <tr>
-                <td>{{ objet.id }}</td>
+                <td>{{ objet.nom_o }}</td>
                 <td>{{ objet.Type }}</td>
-                <td> <img src="{{asset('uploads/' ~objet.Picture )}}" alt="{{activite.image}}" width="50" height="50"></td>
+                <td> <img src="{{asset('uploads/' ~objet.Picture )}}" alt="{{objet.Picture}}" width="50" height="50"></td>
                 <td>{{ objet.Age }}</td>
-                <td>{{ objet.historique }}</td>
                 <td>{{ objet.description }}</td>
                 <td>
                     <a href="{{ path('app_objet_show', {'id': objet.id}) }}"class="btn btn-danger">show</a>
                     <a href="{{ path('app_objet_edit', {'id': objet.id}) }}"class="btn btn-warning">edit</a>
-                    <a href="{{ path('app_objet_delete', {'id':objet.id}) }}" class="btn btn-primary">Supprimer</a>
+                    <a  class="btn btn-primary"> {{ include('objet/_delete_form.html.twig') }} </a>
+
                 </td>
             </tr>
         {% else %}
@@ -41,4 +40,44 @@
     </table>
 
     <a href="{{ path('app_objet_new') }}"class="btn btn-primary">Create new</a>
+{% endblock %}
+{% block Header %}
+<header id="header" class="d-flex align-items-center">
+    <div class="container d-flex justify-content-between">
+
+      <div id="logo">
+        <h1><a style="color: #71A5C7;">Eco<span style="color: #B2D257;">Sphere</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt=""></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href={{ path('app_home') }}>Home</a></li>
+          <li><a class="nav-link scrollto" href="#about">Sign in </a></li>
+          
+          <!--<li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="#">Drop Down 1</a></li>
+              <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  <li><a href="#">Deep Drop Down 1</a></li>
+                  <li><a href="#">Deep Drop Down 2</a></li>
+                  <li><a href="#">Deep Drop Down 3</a></li>
+                  <li><a href="#">Deep Drop Down 4</a></li>
+                  <li><a href="#">Deep Drop Down 5</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Drop Down 2</a></li>
+              <li><a href="#">Drop Down 3</a></li>
+              <li><a href="#">Drop Down 4</a></li>
+            </ul>
+          </li>-->
+          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><
 {% endblock %}

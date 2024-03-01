@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-#use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ObjetType extends AbstractType
@@ -51,6 +51,7 @@ class ObjetType extends AbstractType
                     'Bad' => 'Bad',
                 ],
                 ])
+             
             
         ;
     }

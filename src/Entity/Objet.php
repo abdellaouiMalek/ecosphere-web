@@ -23,16 +23,18 @@ class Objet
     /**
      * @Assert\NotBlank(message="Type ne doit pas être vide.")
     */
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $Type = null;
     /**
      * @Groups("objets")
+     *
     */
+    
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $Picture = null;
-
-    #[ORM\Column(length: 255)]
+    
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $upload= null;
     
   /**
@@ -41,13 +43,13 @@ class Objet
      * @Assert\GreaterThan(value=0, message="L'âge doit être supérieur à zéro")
      */
    
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $Age = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $historique = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
      /**
      * @Assert\NotBlank(message="La description ne doit pas être vide.")
      * @Assert\Type("string", message="La valeur {{ value }} n'est pas une chaîne de caractères valide.")
@@ -62,7 +64,7 @@ class Objet
     #[ORM\OneToMany(mappedBy: 'Objet', targetEntity: Historique::class)]
     private Collection $Historique;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     /**
      * @Assert\NotBlank(message="nom ne doit pas être vide.")
      * @Assert\Type("string", message="La valeur {{ value }} n'est pas une chaîne de caractères valide.")
@@ -75,6 +77,12 @@ class Objet
     */
     private ?string $nom_o = null;
 
+    #[ORM\Column( nullable: true)]
+    private ?int $prix = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $history = null;
+
     public function __construct()
     {
         $this->Historique = new ArrayCollection();
@@ -84,15 +92,25 @@ class Objet
     {
         return $this->id;
     }
-    
-    public function getNom(): ?int
+    public function setupload(string $upload): static
     {
-        return $this->Nom;
+        $this->upload = $upload;
+
+        return $this;
+    }
+    public function getupload(): ?string
+    {
+        return $this->upload;
+    }    
+    
+    public function getNom_o(): ?string
+    {
+        return $this->nom_o;
     }
 
-    public function setNom(string $Nom): static
+    public function setNom_o(string $nom_o): static
     {
-        $this->Nom = $Nom;
+        $this->nom_o = $nom_o;
 
         return $this;
     }
@@ -188,6 +206,30 @@ class Objet
     public function setNomO(string $nom_o): static
     {
         $this->nom_o = $nom_o;
+
+        return $this;
+    }
+
+    public function getPrix(): ?int
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(int $prix): static
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getHistory(): ?string
+    {
+        return $this->history;
+    }
+
+    public function setHistory(string $history): static
+    {
+        $this->history = $history;
 
         return $this;
     }

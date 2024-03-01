@@ -1,6 +1,10 @@
 
-{{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
     {{ form_widget(form) }}
 {{ form_errors(form) }}
-    <button class="btn btn-primary">{{ button_label|default('Save')}}</button>
+    <br>
+    <a href="{{ path('app_historique_new') }}" button class="btn btn-primary">{{ button_label|default('History')}}</button></br>
+    <br>
+    <button class="btn btn-primary">{{ button_label|default('save')}}</button>
+    </br>
 {{ form_end(form) }}
