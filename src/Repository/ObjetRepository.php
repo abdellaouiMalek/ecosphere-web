@@ -63,4 +63,35 @@ class ObjetRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+public function index(SessionInterface $session, ObjetRepository $objetRepository): Response
+{
+    $panier = $session->get('panier', []);
+    $panierWithData = [];
+    foreach ($panier as $id => $quantity) {
+        $objet = $objetRepository->find($id);
+        if ($objet) {
+            $panierWithData[] = [
+                'objet' => $objet,
+                'quantity' => $quantity
+            ];
+        } else {
+            // Si l'objet n'existe pas, le retirer du panier
+            unset($panier[$id]);
+            $session->set('panier', $panier);
+        }
+    }
+
+    $total = 0;
+    foreach ($panierWithData as $item) {
+        $totalItem = $item['objet']->getPrix() * $item['quantity'];
+        $total += $totalItem;
+    }
+
+    return $this->render('carte/index.html.twig', [
+        'items' => $panierWithData,
+        'total' => $total
+    ]);
+}
 }

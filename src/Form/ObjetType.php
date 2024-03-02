@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
 class ObjetType extends AbstractType
 {
@@ -51,7 +52,7 @@ class ObjetType extends AbstractType
                     'Bad' => 'Bad',
                 ],
                 ])
-             
+            ->add('prix', MoneyType::class) 
             
         ;
     }

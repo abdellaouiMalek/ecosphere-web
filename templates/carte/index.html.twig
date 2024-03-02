@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre Panier{% endblock %}
+
+{% block west %}
+    <style>
+        .welcome-image img {
+            width: 100%;
+            height: auto;
+        }
+        .welcome-message {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+
+    <div class="welcome-image">
+        <img src="{{ asset('frontoffice/assets/img/panier.png') }}" alt="Image de bienvenue">
+    </div>
+    <div class="welcome-message">
+        <h2>Thank you for trusting us!</h2>
+        <p>We are happy to support you at every step!</p>
+    </div>
+
+    <h1>Your cart</h1>
+    {% if items | length > 0 %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th> Image </th>
+                <th> objet </th>
+                <th> Description </th>
+                <th> Price </th>
+                <th> Quantity </th>
+                <th> Total </th>
+                <th> Action </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in items %}
+                <tr>
+                    <td><img src="{{ vich_uploader_asset(item.objet, 'upload') }}" class="img-fluid" alt="{{ item.objet.nom }}" style="width: 100px; height: auto;"></td>
+                    <td>{{ item.objet.nom }}</td>
+                    <td>{{ item.objet.description }}</td>
+                    <td>{{ item.objet.prix }} €</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-secondary decrease" data-id="{{ item.objet.id }}">-</button>
+                        {{ item.quantity }}
+                        <button class="btn btn-sm btn-outline-secondary increase" data-id="{{ item.objet.id }}">+</button>
+                    </td>
+                    <td>{{ item.objet.prix * item.quantity }} €</td>
+                    <td>
+                        <a href="{{ path('cart_remove', {'id': item.objet.id}) }}" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5" class="text-right">Total: </td>
+                <td>{{ total }} €</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="7" class="text-right">
+                    <form action="{{ path('payment_form') }}" method="post">
+                        <button type="submit" class="btn btn-success">Payer</button>
+                    </form>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    {% else %}
+        <p>Votre panier est vide.</p>
+    {% endif %}
+{% endblock %}
+
+{% block panier %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const increaseButtons = document.querySelectorAll('.increase');
+            const decreaseButtons = document.querySelectorAll('.decrease');
+
+            increaseButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const id = this.getAttribute('data-id');
+                    updateQuantity(id, 1); // Augmenter la quantité
+                });
+            });
+
+            decreaseButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const id = this.getAttribute('data-id');
+                    updateQuantity(id, -1); // Diminuer la quantité
+                });
+            });
+
+            function updateQuantity(productId, change) {
+                fetch(`/panier/update/${productId}/${change}`, { method: 'POST' })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            location.reload(); // Recharger la page pour voir les modifications
+                        } else {
+                            alert('Impossible de mettre à jour la quantité');
+                        }
+                    });
+            }
+        });
+    </script>
+{% endblock %}

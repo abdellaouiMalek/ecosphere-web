@@ -6,3 +6,4 @@ Historique:
     path: /new
     # the controller value has the format 'controller_class::method_name'
     controller: App\Controller\HistoriqueController::new
+ 

@@ -3,34 +3,35 @@
 {% block title %}Objet index{% endblock %}
 
 {% block body %}
-    <h1>Objet index</h1>
+    <h1>Shop objects</h1>
 
 
-
-    <a href="{{ path('app_objet_new') }}"class="btn btn-primary">Create new</a>
 
 
     {% for objet in objets %}
       <div class="container mt-3">
-      <p>{{objet.type}}</p>
+     
       <div class="card" style="width:400px">
         <img class="card-img-top" src="/upload/{{objet.picture}}" alt="Card picture" style="width:100%">
         <div class="card-body">
+          <h4 class="card-title">{{objet.type}}</h4>
           <h4 class="card-title">{{objet.nom_o}}</h4>
-          <h4 class="card-title">Type:{{objet.type}}</h4>
-          <p class="card-text">{{objet.description}}</p>
-
+          
+          <h4 class="card-title">{{objet.description}}</h4>
+          <h4 class="card-title">{{objet.getPrix}}€</h4>
+          <p>{{ objet.getPrix }} €</p>
+          <!-- Bouton Ajouter au panier -->
+          <a href="{{ path('cart_add', {'id': objet.id}) }}" class="btn btn-primary">Add au panier</a>
 
 
           <a href="{{ path('app_objet_show', {'id': objet.id}) }}"class="btn btn-danger">show</a>
           <a href="{{ path('app_objet_edit', {'id': objet.id}) }}"class="btn btn-warning">edit</a>
-          {{ include('objet/_delete_form.html.twig') }}
-
+          {{ include('objet/_delete_form.html.twig') }} 
         </div>
       </div>
       <br>
     {% endfor %}
-
+    <a href="{{ path('app_objet_new') }}"class="btn btn-primary">Create new</a>
 {% endblock %}
 
 

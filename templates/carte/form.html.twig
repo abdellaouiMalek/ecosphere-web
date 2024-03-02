@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement{% endblock %}
+
+{% block west %}
+    <div class="container">
+        <h1>Informations de Paiement</h1>
+        <form action="{{ path('process_payment') }}" method="post">
+            <div class="mb-3">
+                <label for="cardNumber" class="form-label">Numéro de Carte</label>
+                <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" required>
+            </div>
+            <div class="mb-3">
+                <label for="cardExpiration" class="form-label">Date d'Expiration</label>
+                <input type="text" class="form-control" id="cardExpiration" name="cardExpiration" placeholder="MM/AA" required>
+            </div>
+            <div class="mb-3">
+                <label for="cardCVC" class="form-label">CVC</label>
+                <input type="text" class="form-control" id="cardCVC" name="cardCVC" placeholder="123" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Payer</button>
+        </form>
+    </div>
+    <div class="mb-3">
+        <label for="promoCode" class="form-label">Code Promo</label>
+        <input type="text" class="form-control" id="promoCode" name="promoCode" placeholder="Entrez votre code promo">
+    </div>
+{% endblock %}

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Controller;
+
+
 use App\Entity\Objet;
 use App\Form\ObjetType;
 use App\Repository\ObjetRepository;
@@ -61,6 +63,8 @@ class ObjetController extends AbstractController
     #[Route('/{id}', name: 'app_objet_show', methods: ['GET'])]
     public function show(Objet $objet): Response
     {
+        $objet=$this->getDoctrine()->getRepository(objet::class)->findAll();
+
         return $this->render('objet/show.html.twig', [
             'objet' => $objet,
         ]);
