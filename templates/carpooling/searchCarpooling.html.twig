@@ -1,0 +1,59 @@
+{#}
+{% extends 'carpooling/indexBase.html.twig' %}
+
+
+{% block title %}New Carpooling{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row align-items-center justify-content-center">
+        <div class="col-lg-10">
+            <div class="row mb-5">
+                <div class="col-lg-7 intro">
+                    <h1>Carpool to thousands of destinations at a low cost.</h1>
+                </div>
+            </div>
+
+            {{ form_start(form, {'attr': {'class': 'trip-form'}}) }}
+
+            <div class="row align-items-center">
+                <div class="mb-3 mb-md-0 col-md-3">
+                    {{ form_row(form.departureDate, {'attr': {'class': 'form-control datepicker px-3'}}) }}
+                </div>
+                <div class="mb-3 mb-md-0 col-md-3">
+                    {{ form_row(form.destination, {'attr': {'class': 'form-control px-3'}}) }}
+                </div>
+                <div class="mb-3 mb-md-0 col-md-3">
+                    {{ form_row(form.arrivalPlace, {'attr': {'class': 'form-control px-3'}}) }}
+                </div>
+                <div class="mb-3 mb-md-0 col-md-3">
+                    <input type="submit" value="Search Now" class="btn btn-primary btn-block py-3">
+                </div>
+            </div>
+
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{#}
+{# templates/carpooling/searchCarpooling.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche de covoiturages{% endblock %}
+
+{% block body %}
+    <h1>Recherche de covoiturages</h1>
+    {{ form_start(form) }}
+        {{ form_row(form.destination) }}
+        {{ form_row(form.departureDate) }}
+        {{ form_row(form.departure) }}
+        {{ form_row(form.time) }}
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+    {{ form_end(form) }}
+{% endblock %}
+

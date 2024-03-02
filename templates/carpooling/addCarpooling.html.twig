@@ -1,34 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Carpooling{% endblock %}
+{% block title %}New Carpooling
+{% endblock %}
 
 {% block body %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ block('title') }}</div>
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}}
+							) }}
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="card">
+					<div class="card-header">{{ block('title') }}</div>
 
-                <div class="card-body">
-                    <form method="post">
-                        {{ form_start(form) }}
+					<div class="card-body">
+						<form method="post">
+							
+							{{ form_row(form.destination, {'attr': {'class': 'form-control mb-3'}}) }}
+						<!--	<div class="error-message">
+								<Strong>{{ form_errors(form.destination) }}</Strong>
+							</div> -->
+                            
+							{{ form_row(form.arrivalPlace, {'attr': {'class': 'form-control mb-3'}}) }}
+							{{ form_row(form.price, {'attr': {'class': 'form-control mb-3'}}) }}
+							{{ form_row(form.time, {'attr': {'class': 'form-control mb-3'}}) }}
+							{{ form_row(form.departureDate, {'attr': {'class': 'form-control mb-3'}}) }}
+							{{ form_row(form.arrivalDate, {'attr': {'class': 'form-control mb-3'}}) }}
 
-                        {{ form_row(form.daparturePlace, {'attr': {'class': 'form-control mb-3'}}) }}
-                        {{ form_row(form.arrivalPlace, {'attr': {'class': 'form-control mb-3'}}) }}
-                        {{ form_row(form.price, {'attr': {'class': 'form-control mb-3'}}) }}
-                        {{ form_row(form.time, {'attr': {'class': 'form-control mb-3'}}) }}
-                        {{ form_row(form.departureDate, {'attr': {'class': 'form-control mb-3'}}) }}
+							<div class="text-center">
+								{{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary mr-2'}}) }}
+								<a href="{{ path('app_carpooling_index') }}" class="btn btn-secondary">Cancel</a>
+							</div>
 
-                        <div class="text-center">
-                            {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary mr-2'}}) }}
-                            <a href="{{ path('app_carpooling_index') }}" class="btn btn-secondary">Cancel</a>
-                        </div>
-
-                        {{ form_end(form) }}
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+							{{ form_end(form) }}
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

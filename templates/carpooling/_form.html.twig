@@ -1,10 +1,11 @@
-{{ form_start(form) }}
+{{ form_start(form , {'attr':{'novalidate' : 'novalidate'}}) }}
 
-{{ form_row(form.daparturePlace, {'attr': {'class': 'form-control mb-3'}}) }}
+{{ form_row(form.destination, {'attr': {'class': 'form-control mb-3'}}) }}
 {{ form_row(form.arrivalPlace, {'attr': {'class': 'form-control mb-3'}}) }}
 {{ form_row(form.price, {'attr': {'class': 'form-control mb-3'}}) }}
 {{ form_row(form.time, {'attr': {'class': 'form-control mb-3'}}) }}
 {{ form_row(form.departureDate, {'attr': {'class': 'form-control mb-3'}}) }}
+{{ form_row(form.arrivalDate, {'attr': {'class': 'form-control mb-3'}}) }}
 
 <button type="submit" class="btn btn-primary">{{ button_label }}</button>
 

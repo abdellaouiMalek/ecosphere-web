@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CarpoolingRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CarpoolingRepository::class)]
 class Carpooling
@@ -21,10 +22,11 @@ class Carpooling
     private ?\DateTimeInterface $arrivalDate = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $daparturePlace = null;
+   // #[Assert\NotBlank(message:"La description est obligatoire")]
+    private ?string $departure = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $arrivalPlace = null;
+    private ?string $destination = null;
 
     #[ORM\Column]
     private ?float $price = null;
@@ -67,27 +69,16 @@ class Carpooling
 
         return $this;
     }
+    
 
-    public function getDaparturePlace(): ?string
+    public function getDeparture(): ?string
     {
-        return $this->daparturePlace;
+        return $this->departure;
     }
 
-    public function setDaparturePlace(string $daparturePlace): static
+    public function setDeparture(string $departure): static
     {
-        $this->daparturePlace = $daparturePlace;
-
-        return $this;
-    }
-
-    public function getArrivalPlace(): ?string
-    {
-        return $this->arrivalPlace;
-    }
-
-    public function setArrivalPlace(string $arrivalPlace): static
-    {
-        $this->arrivalPlace = $arrivalPlace;
+        $this->departure = $departure;
 
         return $this;
     }
@@ -136,6 +127,18 @@ class Carpooling
     public function setCarpoolingRequest(?CarpoolingRequest $carpooling_request): static
     {
         $this->carpooling_request = $carpooling_request;
+
+        return $this;
+    }
+
+    public function getDestination(): ?string
+    {
+        return $this->destination;
+    }
+
+    public function setDestination(string $destination): static
+    {
+        $this->destination = $destination;
 
         return $this;
     }

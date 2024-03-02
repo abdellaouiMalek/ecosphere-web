@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block body %}
+    <h1>Search Results</h1>
+    
+    {% if results is not empty %}
+        <ul>
+            {% for result in results %}
+                <li>
+                    <strong>Departure:</strong> {{ result.departure }}<br>
+                    <strong>Destination:</strong> {{ result.destination }}<br>
+                    <strong>Departure Date:</strong> {{ result.departureDate }}<br>
+                    <strong>Departure Time:</strong> {{ result.time|date('H:i:s') }}<br>
+                    <strong>price:</strong> {{ result.price }}<br>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}    
+{% endblock %}

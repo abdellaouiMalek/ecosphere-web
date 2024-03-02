@@ -13,8 +13,6 @@
 
                 <div class="card-body">
                     <dl class="row">
-                        <dt class="col-sm-3">Id</dt>
-                        <dd class="col-sm-9">{{ carpooling.id }}</dd>
 
                         <dt class="col-sm-3">Departure Date</dt>
                         <dd class="col-sm-9">{{ carpooling.departureDate ? carpooling.departureDate|date('Y-m-d') : '' }}</dd>
@@ -23,7 +21,7 @@
                         <dd class="col-sm-9">{{ carpooling.arrivalDate ? carpooling.arrivalDate|date('Y-m-d') : '' }}</dd>
 
                         <dt class="col-sm-3">Departure Place</dt>
-                        <dd class="col-sm-9">{{ carpooling.daparturePlace }}</dd>
+                        <dd class="col-sm-9">{{ carpooling.destination }}</dd>
 
                         <dt class="col-sm-3">Arrival Place</dt>
                         <dd class="col-sm-9">{{ carpooling.arrivalPlace }}</dd>
