@@ -27,7 +27,6 @@ class CarpoolingController extends AbstractController
             $destination = $formData['destination'];
             $departureDate = $formData['departureDate'];
             $time = $formData['time'];
-            $price = $formData['price'];
 
             
             $results = $entityManager->getRepository(Carpooling::class)
@@ -37,7 +36,6 @@ class CarpoolingController extends AbstractController
                     'departureDate' => $departureDate,
                     'time' => $time,
                 ]);
-                var_dump($results);
     
             if (!empty($results)) {
                 $this->addFlash('results', $results); 
