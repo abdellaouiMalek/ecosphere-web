@@ -34,8 +34,6 @@ class Event
     #[ORM\Column(length: 255)]
     private ?string $objective = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $description = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'event')]
     private Collection $users;
@@ -51,6 +49,9 @@ class Event
 
     #[ORM\ManyToOne(inversedBy: 'events')]
     private ?Category $category = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $description = null;
 
 
 
@@ -138,17 +139,6 @@ class Event
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, User>
@@ -257,6 +247,18 @@ class Event
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }
