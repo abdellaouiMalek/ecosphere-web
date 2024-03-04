@@ -1,0 +1,16 @@
+{# Your Twig template file #}
+
+{# Render the form start tag #}
+{{ form_start(form) }}
+
+{# Render the form fields #}
+<div class="form-group">
+    {{ form_label(form.time, 'Time') }}
+    {{ form_widget(form.time, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.time) }}
+                <button type="submit">Submit</button>
+
+</div>
+
+{# Render the form end tag #}
+{{ form_end(form) }}

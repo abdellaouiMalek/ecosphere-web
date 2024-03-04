@@ -19,7 +19,7 @@
     <div class="form-container">
         {# Render the form using the TestType form type #}
         {{ form_start(form) }}
-        {{ form_row(form.departure, {'attr': {'id': 'test_departure'}}) }}
+        {{ form_row(form.destination, {'attr': {'id': 'add_destination_destination'}}) }}
         <button type="submit">Submit</button>
         {{ form_end(form) }}
     </div>
@@ -55,10 +55,10 @@
                         console.log('City:', city);
 
                         // Set the value of the departure input field to the city name
-                        var test_departure = document.getElementById('test_departure');
-                        console.log('Departure Input:', test_departure); // Debug output
-                        if (test_departure) {
-                            test_departure.value = city;
+                        var add_destination_destination = document.getElementById('add_destination_destination');
+                        console.log('Departure Input:', add_destination_destination); // Debug output
+                        if (add_destination_destination) {
+                            add_destination_destination.value = city;
                         } else {
                             console.error('Error: Departure input field not found.');
                         }

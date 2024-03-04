@@ -28,7 +28,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: null)]
     private ?string $password = null;
 
     #[ORM\Column]
@@ -114,12 +114,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password): static
-    {
-        $this->password = $password;
 
-        return $this;
-    }
 
     public function getPhoneNumber(): ?float
     {

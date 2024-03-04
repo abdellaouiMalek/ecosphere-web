@@ -14,18 +14,23 @@ class SecurityController extends AbstractController
     {
         if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
             // Redirect the user to the homepage or another appropriate page
-            return $this->redirectToRoute('app_user');
+            return $this->redirectToRoute('app_home');
         }
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 
         // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
+         // Retrieve last username
+    $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', [
-            'last_username' => $lastUsername,
-            'error' => $error,
-        ]);
+    // Get the login error if there is one
+    $error = $authenticationUtils->getLastAuthenticationError();
+
+    // Render the login form with the last username and error (if any)
+    return $this->render('security/login.html.twig', [
+        'last_username' => $lastUsername,
+        'error' => $error,
+    ]);
     }
     
 

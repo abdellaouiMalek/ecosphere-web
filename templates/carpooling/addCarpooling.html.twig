@@ -15,12 +15,12 @@
 					<div class="card-body">
 						<form method="post">
 							
-							{{ form_row(form.destination, {'attr': {'class': 'form-control mb-3'}}) }}
+							{{ form_row(form.departure, {'attr': {'class': 'form-control mb-3'}}) }}
 						<!--	<div class="error-message">
 								<Strong>{{ form_errors(form.destination) }}</Strong>
 							</div> -->
                             
-							{{ form_row(form.arrivalPlace, {'attr': {'class': 'form-control mb-3'}}) }}
+							{{ form_row(form.destination, {'attr': {'class': 'form-control mb-3'}}) }}
 							{{ form_row(form.price, {'attr': {'class': 'form-control mb-3'}}) }}
 							{{ form_row(form.time, {'attr': {'class': 'form-control mb-3'}}) }}
 							{{ form_row(form.departureDate, {'attr': {'class': 'form-control mb-3'}}) }}
@@ -28,7 +28,7 @@
 
 							<div class="text-center">
 								{{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary mr-2'}}) }}
-								<a href="{{ path('app_carpooling_index') }}" class="btn btn-secondary">Cancel</a>
+								<a href="{{ path('app_home') }}" class="btn btn-secondary">Cancel</a>
 							</div>
 
 							{{ form_end(form) }}
