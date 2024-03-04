@@ -5,74 +5,33 @@
 {% block body %}
     <h1>Shop objects</h1>
 
-
-
-
-    {% for objet in objets %}
-      <div class="container mt-3">
-     
-      <div class="card" style="width:400px">
-        <img class="card-img-top" src="/upload/{{objet.picture}}" alt="Card picture" style="width:100%">
-        <div class="card-body">
-          <h4 class="card-title">{{objet.type}}</h4>
-          <h4 class="card-title">{{objet.nom_o}}</h4>
-          
-          <h4 class="card-title">{{objet.description}}</h4>
-          <h4 class="card-title">{{objet.getPrix}}€</h4>
-          <p>{{ objet.getPrix }} €</p>
-          <!-- Bouton Ajouter au panier -->
-          <a href="{{ path('cart_add', {'id': objet.id}) }}" class="btn btn-primary">Add au panier</a>
-
-
-          <a href="{{ path('app_objet_show', {'id': objet.id}) }}"class="btn btn-danger">show</a>
-          <a href="{{ path('app_objet_edit', {'id': objet.id}) }}"class="btn btn-warning">edit</a>
-          {{ include('objet/_delete_form.html.twig') }} 
+    {% for objet in page %}
+        <div class="container mt-3">
+            <div class="card" style="width:400px">
+                <img class="card-img-top" src="/upload/{{ objet.picture }}" alt="Card picture" style="width:100%">
+                <div class="card-body">
+                    <h4 class="card-title">{{ objet.getNom_o }}</h4>
+                    <h4 class="card-title">{{ objet.type }}</h4>
+                    <h4 class="card-title">{{ objet.description }}</h4>
+                    <h4 class="card-title">{{ objet.getPrix }}</h4>
+                    <p>{{ objet.getPrix }} €</p>
+                    <!-- Bouton Ajouter au panier -->
+                    <a href="{{ path('cart_add', {'id': objet.id}) }}" class="btn btn-primary">Add au panier</a>
+                    <a href="{{ path('app_objet_show', {'id': objet.id}) }}" class="btn btn-danger">show</a>
+                    <a href="{{ path('app_objet_edit', {'id': objet.id}) }}" class="btn btn-warning">edit</a>
+                    {{ include('objet/_delete_form.html.twig') }}
+                </div>
+            </div>
         </div>
-      </div>
-      <br>
     {% endfor %}
-    <a href="{{ path('app_objet_new') }}"class="btn btn-primary">Create new</a>
+   
+    <a href="{{ path('app_objet_new') }}" class="btn btn-primary">Create new</a>
+
+    {{ knp_pagination_render(page) }} <!-- Pagination render -->
 {% endblock %}
-
-
 
 {% block Header %}
 <header id="header" class="d-flex align-items-center">
-    <div class="container d-flex justify-content-between">
-
-      <div id="logo">
-        <h1><a style="color: #71A5C7;">Eco<span style="color: #B2D257;">Sphere</span></a></h1>
-        <!-- Uncomment below if you prefer to use an picture logo -->
-        <!-- <a href="index.html"><img src="assets/img/logo.png" alt=""></a>-->
-      </div>
-
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a class="nav-link scrollto active" href={{ path('app_home') }}>Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">Sign in </a></li>
-          
-          <!--<li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li><a href="#">Drop Down 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Drop Down 2</a></li>
-              <li><a href="#">Drop Down 3</a></li>
-              <li><a href="#">Drop Down 4</a></li>
-            </ul>
-          </li>-->
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
-
-    </div>
-  </header><
+    <!-- Header content -->
+</header>
 {% endblock %}

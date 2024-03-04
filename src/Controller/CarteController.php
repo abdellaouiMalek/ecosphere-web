@@ -14,13 +14,14 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class CarteController extends AbstractController
 {
+    
     #[Route('/carte', name: 'app_carte', methods: ['GET'])]
-    public function index(SessionInterface $session, ObjetRepository $objetRepository): Response
+    public function index(SessionInterface $session, ObjetRepository $ObjetRepository): Response
     {
         $panier= $session->get('panier', []);
         $panierWithData = [];
         foreach ($panier as $id => $quantity) {
-            $objet = $objetRepository->find($id);
+            $objet = $ObjetRepository->find($id);
             if ($objet) {
                 $panierWithData[] = [
                     'objet' => $objet,
@@ -47,9 +48,9 @@ class CarteController extends AbstractController
     }
 
     #[Route('/panier/add/{id}', name: 'cart_add')]
-    public function addToCart($id, SessionInterface $session, ObjetRepository $objetRepository)
+    public function addToCart($id, SessionInterface $session, ObjetRepository $ObjetRepository)
     {
-        $objet = $objetRepository->find($id);
+        $objet = $ObjetRepository->find($id);
 
         if (!$objet) {
             // Gérer le cas où l'objet n'existe pas

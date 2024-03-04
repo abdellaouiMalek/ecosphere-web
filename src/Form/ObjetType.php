@@ -19,15 +19,6 @@ class ObjetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-           # ->add('id')
-           ->add('nom_o')#,TextType::class, [
-            #'constraints' => [
-             #   new Assert\Regex([
-              #      'pattern' => '/^[a-zA-Z à é è  -- , ""]+$/u',
-               #     'message' => 'The name can only contain letters'
-                #])
-            #]
-        #])
             ->add('Type',ChoiceType::class, [
                 'choices' => [
                     'Clothes' => 'Clothes',

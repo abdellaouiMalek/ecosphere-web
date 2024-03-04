@@ -65,16 +65,7 @@ class Objet
     private Collection $Historique;
 
     #[ORM\Column(length: 255, nullable: true)]
-    /**
-     * @Assert\NotBlank(message="nom ne doit pas être vide.")
-     * @Assert\Type("string", message="La valeur {{ value }} n'est pas une chaîne de caractères valide.")
-     * @Assert\Length(
-     *      max = 255,
-     *      maxMessage = "nom ne doit pas dépasser {{ limit }} caractères."
-     * )
 
-     
-    */
     private ?string $nom_o = null;
 
     #[ORM\Column]
@@ -107,18 +98,7 @@ class Objet
     {
         return $this->upload;
     }    
-    
-    public function getNom_o(): ?string
-    {
-        return $this->nom_o;
-    }
-
-    public function setNom_o(string $nom_o): static
-    {
-        $this->nom_o = $nom_o;
-
-        return $this;
-    }
+ 
 
     public function getType(): ?string
     {
@@ -203,12 +183,12 @@ class Objet
         return $this;
     }
 
-    public function getNomO(): ?string
+    public function getNom_o(): ?string
     {
         return $this->nom_o;
     }
 
-    public function setNomO(string $nom_o): static
+    public function setNom_o(string $nom_o): static
     {
         $this->nom_o = $nom_o;
 

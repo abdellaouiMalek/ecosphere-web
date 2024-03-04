@@ -30,10 +30,10 @@
             <thead>
             <tr>
                 <th> Image </th>
-                <th> objet </th>
+                <th> Name </th>
                 <th> Description </th>
-                <th> Price </th>
-                <th> Quantity </th>
+                <th> Prix </th>
+        
                 <th> Total </th>
                 <th> Action </th>
             </tr>
@@ -42,9 +42,10 @@
             {% for item in items %}
                 <tr>
                     <td><img src="{{ vich_uploader_asset(item.objet, 'upload') }}" class="img-fluid" alt="{{ item.objet.nom }}" style="width: 100px; height: auto;"></td>
-                    <td>{{ item.objet.nom }}</td>
-                    <td>{{ item.objet.description }}</td>
+                    <td>{{ item.objet.nom_o }}</td>                    
                     <td>{{ item.objet.prix }} €</td>
+                    <td>{{ item.objet.description }}</td>
+
                     <td>
                         <button class="btn btn-sm btn-outline-secondary decrease" data-id="{{ item.objet.id }}">-</button>
                         {{ item.quantity }}

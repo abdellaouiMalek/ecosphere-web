@@ -20,10 +20,16 @@ use MercurySeries\FlashyBundle\FlashyNotifier;
 class ObjetController extends AbstractController
 {
     #[Route('/', name: 'app_objet_index', methods: ['GET'])]
-    public function index(ObjetRepository $ObjetRepository): Response
-    {
+    public function index(ObjetRepository $ObjetRepository,PaginatorInterface $paginator,EntityManagerInterface $entityManager ,Request $request): Response
+    {  
+         $centres = $entityManager->getRepository(Objet::class)->findAll();
+        $page = $paginator->paginate(
+            $centres,
+            $request->query->getInt('page', 1),3
+        );
         return $this->render('objet/index.html.twig', [
-            'objets' => $ObjetRepository->findAll(),
+            'objets' => $ObjetRepository->findAll(),'page' => $page
+
         ]);
     }
 
@@ -61,9 +67,9 @@ class ObjetController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_objet_show', methods: ['GET'])]
-    public function show(Objet $objet): Response
+    public function show($id, ObjetRepository $repository)
     {
-        $objet=$this->getDoctrine()->getRepository(objet::class)->findAll();
+        $objet = $repository->find($id);
 
         return $this->render('objet/show.html.twig', [
             'objet' => $objet,
