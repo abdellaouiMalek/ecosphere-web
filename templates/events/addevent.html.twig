@@ -96,6 +96,9 @@
                             {{ form_widget(form.objective, {'attr': {'class': 'form-control', 'placeholder': 'Objective'}}) }}
                             {{ form_errors(form.objective) }}
                         </div>
+                         <div class="form-holder">
+                        {{ form_row(form.category, {'attr': {'class': 'form-control', 'placeholder': 'Select category'}}) }}
+                        </div>
                         <div class="form-holder">
                             {{ form_label(form.description) }}
                             {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Description'}}) }}

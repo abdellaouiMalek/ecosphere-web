@@ -4,34 +4,45 @@ namespace App\Controller;
 
 use App\Form\EventFormType;
 use App\Entity\Event;
+use App\Entity\Category;
+use App\Entity\EventRating;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\EventRepository;
+use App\Repository\CategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Knp\Component\Pager\PaginatorInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class EventsController extends AbstractController
 {
 
-    private $managerRegistry;
+    private $managerRegistry; // Define a private property for the managerRegistry
+    private $logger; // Define a private property for the logger
 
-    public function __construct(ManagerRegistry $managerRegistry)
+    // Inject both dependencies via the constructor
+    public function __construct(ManagerRegistry $managerRegistry, LoggerInterface $logger)
     {
         $this->managerRegistry = $managerRegistry;
+        $this->logger = $logger;
     }
 
     #[Route('/events', name: 'app_events')]
-    public function index(EventRepository $eventRepository, PaginatorInterface $paginatorInterface, Request $request): Response
+    public function index(EventRepository $eventRepository, CategoryRepository $categoryRepository, PaginatorInterface $paginatorInterface, Request $request): Response
     {
         $events = $eventRepository->findAll();
+        $category = $categoryRepository->findAll();
         $events = $paginatorInterface->paginate($events, $request->query->getInt('page',1),8);
 
         return $this->render('events/eventsHomePage.html.twig', [
-            'events' => $events,
+            'events' => $events, 'category' => $category,
         ]);
     }
 
@@ -86,16 +97,40 @@ class EventsController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
     #[Route('/event/{id}', name: 'more_details')]
     public function moreDetails($id): Response
     {
          $event = $this->managerRegistry->getRepository(Event::class)->find($id);
+
          return $this->render('events/eventDetails.html.twig', [
             'event' => $event,
          ]);
     }
 
+    #[Route('/save-rating/{id}', name: 'save_rating', methods: ["POST"])]
+    public function saveRating(Request $request, EntityManagerInterface $entityManager, $id): JsonResponse
+    {
+        // Retrieve the rating value and event ID from the request
+        $ratingValue = $request->request->get('rate');
+        
+       // $eventId = $request->request->get('event_id');
+    
+        // Find the event by its ID
+        $event = $entityManager->getRepository(Event::class)->find($id);
+        // Create a new EventRating entity and associate it with the event
+        $eventRating = new EventRating();
+        $eventRating->setRating($ratingValue);
+        $eventRating->setEvent($event);
+    
+        // Persist the EventRating entity
+        $entityManager->persist($eventRating);
+        $entityManager->flush();
+    
+        // Return a JSON response indicating success
+        return new JsonResponse(['success' => true]);
+    }
+    
+    
     #[Route('/delete-event/{id}', name: 'app_delete_event')]
     public function deleteEvent($id): Response
     {

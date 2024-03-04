@@ -46,10 +46,19 @@ class Event
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
+    #[ORM\OneToMany(targetEntity: EventRating::class, mappedBy: 'event')]
+    private Collection $eventRatings;
+
+    #[ORM\ManyToOne(inversedBy: 'events')]
+    private ?Category $category = null;
+
+
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->eventRegistrations = new ArrayCollection();
+        $this->eventRatings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -209,4 +218,48 @@ class Event
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, EventRating>
+     */
+    public function getEventRatings(): Collection
+    {
+        return $this->eventRatings;
+    }
+
+    public function addEventRating(EventRating $eventRating): static
+    {
+        if (!$this->eventRatings->contains($eventRating)) {
+            $this->eventRatings->add($eventRating);
+            $eventRating->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEventRating(EventRating $eventRating): static
+    {
+        if ($this->eventRatings->removeElement($eventRating)) {
+            // set the owning side to null (unless already changed)
+            if ($eventRating->getEvent() === $this) {
+                $eventRating->setEvent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+
 }

@@ -22,7 +22,6 @@
         /* Add styles for active pagination link */
     }
 </style>
-
     <div class="wrapper d-flex align-items-stretch">
         <nav id="sidebar">
             <div class="custom-menu">
@@ -63,7 +62,7 @@
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5 pt-5">
-
+       
             <section id="community-events" class="text-center py-5">
                 <div class="container">
                     <h2 class="section-title">Community Events</h2>
@@ -74,6 +73,16 @@
             <div class="bg-primary text-white p-4 mb-3 text-center">
                 <p class="lead mb-0">Have an event to suggest? Click below to add it and fill the form with the necessary details!</p>
                 <a href="{{ path('app_add_event') }}" class="btn btn-light mt-3">Add Event</a>
+            </div>
+
+            <div class="p-4 mb-3 text-center">
+                <p>Filtrer</p>
+                <form id="filters">
+                      {% for categorie in category %}
+                         <p><input type="checkbox" name="categories []" id="cat{{categorie.id}}" value="{{categorie.id}}"> 
+                         <label for="cat{{categorie.id}}">{{categorie.name}}</label></p> 
+                      {% endfor %}
+                </form>
             </div>
 
             <div class="container-fluid" style="padding-left: 15px; padding-right: 15px;">
@@ -115,6 +124,7 @@
         </div>
     </div>
 
+    <script src="js/filters.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -132,4 +142,5 @@
             });
         });
     </script>
+
 {% endblock %}
