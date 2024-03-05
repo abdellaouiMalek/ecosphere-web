@@ -1,0 +1,11 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}New Objet{% endblock %}
+
+{% block body %}
+    <h1>Create new Objet</h1>
+
+    {{ include('objet_back/_form.html.twig') }}
+
+    <a href="{{ path('app_objet_back_index') }}class="btn btn-secondary">back to list</a>
+{% endblock %}

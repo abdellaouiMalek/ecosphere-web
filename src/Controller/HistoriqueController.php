@@ -13,7 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
 #[Route('/historique')]
 class HistoriqueController extends AbstractController
 {
@@ -25,18 +24,23 @@ class HistoriqueController extends AbstractController
 
         return $this->render('historique/index.html.twig', [
             'historiques' => $historiqueRepository->findAll(),
+            'objet' => new Objet(), 
         ]);
     }
 
 
 #ajout dynamique a traver formulaire 
-    #[Route('/new', name: 'app_historique_new', methods: ['GET', 'POST'])]
-    public function new(ManagerRegistry $manager,Request $request): Response
+    #[Route('/new/{id}', name: 'app_historique_new', methods: ['GET', 'POST'])]
+    public function new(ManagerRegistry $manager,Request $request,$id): Response
     {
         $em = $manager->getManager();
+        $objet = $em->getRepository(Objet::class)->find($id);
         $historique = new Historique();
+        $historique->setObjet($objet);
         $historique->setDate(new \DateTime()); // Définir la date actuelle
-        $form = $this->createForm(HistoriqueType::class, $historique);
+        $form = $this->createForm(HistoriqueType::class, $historique,[
+            'nom_objet'=> $objet->getNom(),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -49,6 +53,7 @@ class HistoriqueController extends AbstractController
         return $this->renderForm('historique/new.html.twig', [
             'historique' => $historique,
             'form' => $form,
+            'nom_objet' => $objet->getNom(),
         ]);
         
     }

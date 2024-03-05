@@ -35,7 +35,7 @@
         {% for historique in historiques %}
             <tr>
                 <td>{{ historique.id }}</td>
-                <td>{{ historique.initialCondition }}</td>
+                <td>{{ historique.nom_o }}</td>
                 <td>{{ historique.initialCondition }}</td>
                 <td>{{ historique.date | date}}</td>
 
@@ -52,18 +52,6 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_historique_new') }}">Create new</a>
-
-<div class="example-wrapper">
-  <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/PIWEB/ecosphere/src/Controller/HistoriqueController.php'|file_link(0) }}">src/Controller/HistoriqueController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/PIWEB/ecosphere/templates/historique/index.html.twig'|file_link(0) }}">templates/historique/index.html.twig</a></code></li>
-    </ul>
-</div>
 {% endblock %}
 
 

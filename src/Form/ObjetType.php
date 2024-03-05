@@ -14,12 +14,20 @@ use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
+
 class ObjetType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
+            ->add('nom',TextType::class, [
+                'constraints' => [
+                    new Assert\Regex([
+                        'pattern' => '/^[a-zA-Z à é è  -- , ""]+$/u',
+                        'message' => 'The name can only contain letters'
+                    ])
+                ]
+            ])
             ->add('Type',ChoiceType::class, [
                 'choices' => [
                     'Clothes' => 'Clothes',

@@ -78,12 +78,12 @@ class Historique
 
         return $this;
     }
-    public function getNomo(): ?string
+    public function getNom_o(): ?string
     {
         return $this->nom_o;
     }
 
-    public function setNomo(string $nom_o): static
+    public function setNom_o(string $nom_o): static
     {
         $this->nom_o = $nom_o;
 

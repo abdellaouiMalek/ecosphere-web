@@ -77,7 +77,7 @@ class ObjetController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_objet_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Objet $objet,ObjetRepository $ObjetRepository): Response
+    public function edit(Request $request, Objet $objet,ObjetRepository $ObjetRepository,FlashyNotifier $flashy): Response
     {
         $form = $this->createForm(ObjetType::class, $objet);
         $form->handleRequest($request);
@@ -103,6 +103,7 @@ class ObjetController extends AbstractController
             }
     
             $ObjetRepository->save($objet, true);
+            $flashy->info('Objet modifier !');
 
             return $this->redirectToRoute('app_objet_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -114,14 +115,14 @@ class ObjetController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_objet_delete', methods: ['POST'])]
-    public function delete(ManagerRegistry $managerRegistry, ObjetRepository $ObjetRepository,$id)
+    public function delete(ManagerRegistry $managerRegistry, ObjetRepository $ObjetRepository,$id,FlashyNotifier $flashy)
     {
         $objet= $ObjetRepository->find($id);
         $em= $managerRegistry->getManager();
 
         $em->remove($objet);
         $em->flush();
-
+        $flashy->error('Objet supprimer !');
         return $this->redirectToRoute('app_objet_index', [], Response::HTTP_SEE_OTHER);
     }
 }

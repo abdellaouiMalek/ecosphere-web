@@ -30,14 +30,13 @@
                     <!-- Bouton Ajouter au panier -->
                     <a href="{{ path('cart_add', {'id': objet.id}) }}" class="btn btn-primary">Add au panier</a>
                     <a href="{{ path('app_objet_show', {'id': objet.id}) }}" class="btn btn-danger">show</a>
-                    <a href="{{ path('app_objet_edit', {'id': objet.id}) }}" class="btn btn-warning">edit</a>
-                    {{ include('objet/_delete_form.html.twig') }}
+                    <a href="{{ path('app_historique_new',{'id': objet.id}) }}"> <button class="btn btn-warning">{{ button_label|default('History')}}</button></br>
+
                 </div>
             </div>
         </div>
     {% endfor %}
    
-    <a href="{{ path('app_objet_new') }}" class="btn btn-primary">Create new</a>
 
     {{ knp_pagination_render(page) }} <!-- Pagination render -->
     <script src="//code.jquery.com/jquery.js"></script>

@@ -1,0 +1,58 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Objet{% endblock %}
+
+{% block body %}
+    <h1>Objet</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ objet.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ objet.Type }}</td>
+            </tr>
+            <tr>
+                <th>Picture</th>
+                <td>{{ objet.Picture }}</td>
+            </tr>
+            <tr>
+                <th>Upload</th>
+                <td>{{ objet.upload }}</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>{{ objet.Age }}</td>
+            </tr>
+            <tr>
+                <th>Historique</th>
+                <td>{{ objet.historique }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ objet.description }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ objet.prix }}</td>
+            </tr>
+            <tr>
+                <th>History</th>
+                <td>{{ objet.history }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ objet.nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_objet_back_index') }}type="button" class="btn btn-secondary">back to list</a>
+
+    <a href="{{ path('app_objet_back_edit', {'id': objet.id}) }}type="button" class="btn btn-warning">edit</a>
+
+    {{ include('objet_back/_delete_form.html.twig') }}
+{% endblock %}

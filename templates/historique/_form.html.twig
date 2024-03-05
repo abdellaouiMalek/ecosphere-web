@@ -1,4 +1,6 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+{{ form_row(form.nom_o , {'value': nom_objet})}}
+{{ form_row(form.date)}}
+{{ form_row(form.initialCondition)}}
     <button class="btn btn-primary">{{ button_label|default('Save')}}</button>
 {{ form_end(form) }}

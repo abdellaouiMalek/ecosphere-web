@@ -1,0 +1,49 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Objet index{% endblock %}
+
+{% block body %}
+    <h1>Objet index</h1>
+
+    <table id="datatablesSimple" class="table table-striped table-secondary"> 
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Type</th>
+                <th>Picture</th>
+                <th>Age</th>
+                <th>Description</th>
+                <th>Prix</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for objet in objets %}
+            <tr>
+                <td>{{ objet.id }}</td>
+                <td>{{ objet.nom }}</td>
+                <td>{{ objet.Type }}</td>
+                <td>{{ objet.Picture }}</td>
+                <td>{{ objet.Age }}</td>
+                <td>{{ objet.description }}</td>
+                <td>{{ objet.prix }}</td>
+                
+                <td>
+                    <a href="{{ path('app_objet_back_show', {'id': objet.id}) }}" class="btn btn-success">Show</a>
+                    <a href="{{ path('app_objet_back_edit', {'id': objet.id}) }}" class="btn btn-warning">Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">No records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_objet_back_new') }}" type="button" class="btn btn-primary btn-lg btn-block">Create new</a>
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
+{% endblock %}

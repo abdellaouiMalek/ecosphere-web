@@ -42,6 +42,7 @@ class HistoriqueType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Historique::class,
+            'nom_objet' => null,
         ]);
     }
 }
