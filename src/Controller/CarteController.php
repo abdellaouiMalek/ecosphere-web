@@ -15,55 +15,50 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class CarteController extends AbstractController
 {
     
-    #[Route('/carte', name: 'app_carte', methods: ['GET'])]
-    public function index(SessionInterface $session, ObjetRepository $ObjetRepository): Response
+    #[Route('/carte', name: 'app_carte')]
+    public function index(SessionInterface $session, ObjetRepository $objetrespository): Response
     {
-        $panier= $session->get('panier', []);
+        $panier = $session->get('panier', []);
         $panierWithData = [];
         foreach ($panier as $id => $quantity) {
-            $objet = $ObjetRepository->find($id);
+            $objet = $objetrespository->find($id);
             if ($objet) {
                 $panierWithData[] = [
                     'objet' => $objet,
                     'quantity' => $quantity
                 ];
             } else {
-                // Si l'objet n'existe pas, le retirer du panier
+                // Si le produit n'existe pas, le retirer du panier
                 unset($panier[$id]);
                 $session->set('panier', $panier);
             }
         }
 
         $total = 0;
-        $paniertWithData = [];
         foreach ($panierWithData as $item) {
             $totalItem = $item['objet']->getPrix() * $item['quantity'];
             $total += $totalItem;
+
         }
 
         return $this->render('carte/index.html.twig', [
-            'items' => $paniertWithData,
+            'items' => $panierWithData,
             'total' => $total
         ]);
     }
 
+
     #[Route('/panier/add/{id}', name: 'cart_add')]
-    public function addToCart($id, SessionInterface $session, ObjetRepository $ObjetRepository)
+    public function add($id, SessionInterface $session)
     {
-        $objet = $ObjetRepository->find($id);
 
-        if (!$objet) {
-            // Gérer le cas où l'objet n'existe pas
-            throw $this->createNotFoundException('L\'objet demandé n\'existe pas.');
-        }
-
-        $panier = $session->get('panier', []);
-        if (!empty($panier[$id])) {
-            $panier[$id]++;
-        } else {
-            $panier[$id] = 1;
-        }
-
+      $panier=$session->get('panier',[]);
+      if (!!isset($panier[$id])) {
+        $panier[$id] = 1;
+       } else {
+        $panier[$id] = 1;
+    }
+   
     $session->set('panier', $panier);
         return $this->redirectToRoute('app_carte');
     }

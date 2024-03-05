@@ -64,9 +64,7 @@ class Objet
     #[ORM\OneToMany(mappedBy: 'Objet', targetEntity: Historique::class)]
     private Collection $Historique;
 
-    #[ORM\Column(length: 255, nullable: true)]
 
-    private ?string $nom_o = null;
 
     #[ORM\Column]
     #[Assert\NotBlank(message: "Le prix ne doit pas être vide.")]
@@ -78,6 +76,19 @@ class Objet
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $history = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    /**
+     * @Assert\NotBlank(message="nom ne doit pas être vide.")
+     * @Assert\Type("string", message="La valeur {{ value }} n'est pas une chaîne de caractères valide.")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "nom ne doit pas dépasser {{ limit }} caractères."
+     * )
+
+     
+    */
+    private ?string $nom = null;
 
     public function __construct()
     {
@@ -215,6 +226,18 @@ class Objet
     public function setHistory(string $history): static
     {
         $this->history = $history;
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(?string $nom): static
+    {
+        $this->nom = $nom;
 
         return $this;
     }
