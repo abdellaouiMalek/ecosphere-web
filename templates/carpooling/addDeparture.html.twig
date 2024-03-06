@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,23 +5,36 @@
     <!-- Load Leaflet.js CSS before JavaScript -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
     <style type="text/css">
+        /* Ensure the map fills the entire right side */
         #map {
-            /* Ensure the map has a height */
-            height: 400px;
+            height: 100vh;
+            width: calc(100% - 400px); /* Adjust this width as needed */
+            float: right;
+        }
+
+        /* Style for left side containing input field */
+        .left-side {
+            float: left;
+            width: 400px; /* Adjust this width as needed */
+            height: 100vh;
+            overflow-y: auto; /* Allow scrolling if content exceeds height */
+            padding: 20px;
+            box-sizing: border-box;
         }
     </style>
     <title>Map with Dynamic Markers</title>
 </head>
 <body>
-    <div id="map"></div>
-
-    <div class="form-container">
-        {# Render the form using the TestType form type #}
-        {{ form_start(form) }}
-        {{ form_row(form.departure, {'attr': {'id': 'carpooling_departure'}}) }}
-        <button type="submit">Submit</button>
-        {{ form_end(form) }}
+    <div class="left-side">
+        <h2>Input Field</h2>
+        <form id="form">
+            <label for="departure">Departure:</label>
+            <input type="text" id="departure" name="departure"><br><br>
+            <button type="submit">Submit</button>
+        </form>
     </div>
+
+    <div id="map"></div>
 
     <!-- Load Leaflet.js JavaScript -->
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
@@ -55,10 +67,10 @@
                         console.log('City:', city);
 
                         // Set the value of the departure input field to the city name
-                        var carpooling_departure = document.getElementById('carpooling_departure');
-                        console.log('Departure Input:', carpooling_departure); // Debug output
-                        if (carpooling_departure) {
-                            carpooling_departure.value = city;
+                        var departureInput = document.getElementById('departure');
+                        console.log('Departure Input:', departureInput); // Debug output
+                        if (departureInput) {
+                            departureInput.value = city;
                         } else {
                             console.error('Error: Departure input field not found.');
                         }

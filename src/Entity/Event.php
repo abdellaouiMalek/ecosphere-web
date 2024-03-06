@@ -3,9 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
@@ -34,8 +34,6 @@ class Event
     #[ORM\Column(length: 255)]
     private ?string $objective = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $description = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'event')]
     private Collection $users;
@@ -46,10 +44,25 @@ class Event
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
+    #[ORM\OneToMany(targetEntity: EventRating::class, mappedBy: 'event')]
+    private Collection $eventRatings;
+
+    #[ORM\ManyToOne(inversedBy: 'events')]
+    private ?Category $category = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $description = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $active = null;
+
+
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->eventRegistrations = new ArrayCollection();
+        $this->eventRatings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -81,24 +94,24 @@ class Event
         return $this;
     }
 
-    public function getDate(): ?string
+    public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(string $date): static
+    public function setDate(\DateTimeInterface $date): static
     {
         $this->date = $date;
 
         return $this;
     }
 
-    public function getTime(): ?string
+    public function getTime(): ?\DateTimeInterface
     {
         return $this->time;
     }
 
-    public function setTime(string $time): static
+    public function setTime(\DateTimeInterface $time): static
     {
         $this->time = $time;
 
@@ -129,17 +142,6 @@ class Event
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, User>
@@ -209,4 +211,72 @@ class Event
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, EventRating>
+     */
+    public function getEventRatings(): Collection
+    {
+        return $this->eventRatings;
+    }
+
+    public function addEventRating(EventRating $eventRating): static
+    {
+        if (!$this->eventRatings->contains($eventRating)) {
+            $this->eventRatings->add($eventRating);
+            $eventRating->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEventRating(EventRating $eventRating): static
+    {
+        if ($this->eventRatings->removeElement($eventRating)) {
+            // set the owning side to null (unless already changed)
+            if ($eventRating->getEvent() === $this) {
+                $eventRating->setEvent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(?bool $active): static
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+
 }

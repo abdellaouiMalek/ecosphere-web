@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Carpooling;
 use App\Entity\Reservation;
 use App\Entity\User;
+use App\Form\AddDepartureType;
 use App\Form\AddDestinationType;
 use App\Form\AddPriceType;
 use App\Form\AddTimeType;
@@ -104,7 +105,7 @@ class CarpoolingController extends AbstractController
     public function addCarpooling(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
         $carpooling = new Carpooling();
-        $form = $this->createForm(CarpoolingType::class, $carpooling);
+        $form = $this->createForm(AddDepartureType::class, $carpooling);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // Store the departure data in the session flash bag
