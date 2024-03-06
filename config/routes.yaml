@@ -5,3 +5,9 @@
 home:
     path: /home
     controller: App\Controller\HomeController::index
+
+register_interest:
+    path: /register-interest
+    controller: 'App\Controller\UserEventsController::registerInterest'
+    methods: [POST]
+  

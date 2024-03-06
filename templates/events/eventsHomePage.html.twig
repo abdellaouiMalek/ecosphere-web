@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %} 
+
+{% set queryParams = app.request.query.all %}
 {% block content %}
+<!DOCTYPE html>
+
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/stylesidebar.css">
@@ -23,42 +27,8 @@
     }
 </style>
     <div class="wrapper d-flex align-items-stretch">
-        <nav id="sidebar">
-            <div class="custom-menu">
-                <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                    <i class="fa fa-bars"></i>
-                    <span class="sr-only">Toggle Menu</span>
-                </button>
-            </div>
-            <div class="p-4">
-                
-                <ul class="list-unstyled components mb-5">
-                    <li class="active">
-                        <a href="#"><span class="fa fa-home mr-3"></span> Events</a>
-                    </li>
-                    <li>
-                        <a href="#"><span class="fa fa-user mr-3"></span> Filter</a>
-                    </li>
-                    <li>
-                        <a href="#"><span class="fa fa-briefcase mr-3"></span> My events</a>
-                    </li>
-                    <li>
-                        <a href="#"><span class="fa fa-sticky-note mr-3"></span> Manage my events</a>
-                    </li>
-                    <li>
-                        <a href="#"><span class="fa fa-suitcase mr-3"></span> Gallery</a>
-                    </li>
-                    <li>
-                        <a href="#"><span class="fa fa-cogs mr-3"></span> Services</a>
-                    </li>
-                    <li>
-                        <a href="#"><span class="fa fa-paper-plane mr-3"></span> Contacts</a>
-                    </li>
-                </ul>
 
-              
-            </div>
-        </nav>
+            {% include 'content/sidebar.html.twig' %}
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5 pt-5">
@@ -78,11 +48,18 @@
             <div class="p-4 mb-3 text-center">
                 <p>Filtrer</p>
                 <form id="filters">
-                      {% for categorie in category %}
-                         <p><input type="checkbox" name="categories []" id="cat{{categorie.id}}" value="{{categorie.id}}"> 
-                         <label for="cat{{categorie.id}}">{{categorie.name}}</label></p> 
-                      {% endfor %}
-                </form>
+                {% for categorie in category %}
+                    {# On vérifie si la catégorie est dans les paramètres #}
+                    {% if queryParams is not empty and queryParams.category is defined %}
+                        {% set checked = (categorie.id in queryParams.category) ? "checked" : "" %}
+                    {% else %}
+                        {% set checked = "" %}
+                    {% endif %}
+
+                    <p><input type="checkbox" name="category[]" id="cat{{categorie.id}}" value="{{categorie.id}}" {{checked}}> <label for="cat{{categorie.id}}">{{categorie.name}}</label></p>
+                {% endfor %}
+                <input type="hidden" name="page" value="{{page}}">
+            </form>
             </div>
 
             <div class="container-fluid" style="padding-left: 15px; padding-right: 15px;">
@@ -107,28 +84,57 @@
                                     <!-- More Details Link -->
                                     <a href="{{ path('more_details', {id:event.id}) }}" class="position-absolute bottom-0 start-0 p-3 text-decoration-none">More Details</a>
                                 </div>
-                                <!-- Edit and Delete Event Buttons -->
                                 <div class="position-absolute bottom-0 end-0 p-2">
-                                    <button class="btn btn-primary me-2 updateEventBtn" data-event-id="{{ event.id }}">Edit</button>
-                                    <a href="{{ path('app_delete_event', {id:event.id}) }}" class="btn btn-danger">Delete</a>
+                                    <button class="register-interest-btn" data-event-id="{{ event.id }}">Interested</button>
                                 </div>
+                                
                             </div>
                         </div>
                     {% endfor %}
                 </div>
             </div>
-             <div class="navigation">
-    {{ knp_pagination_render(events) }}
-</div>
+
+{% set queryParams = app.request.query.all %}
+    {% set queryString = queryParams|filter((v, k) => k != "page" and k != "ajax")|url_encode %}
+
+              <ul class="pagination">
+        <li class="{{ (page == 1) ? 'disabled' : '' }}">
+            <a href="?page=1">
+                <i class="fas fa-step-backward"></i>
+            </a>
+        </li>    
+        <li class="{{ (page == 1) ? 'disabled' : '' }}">
+            <a href="{{ (page > 1) ? '?page=' ~ (page - 1) : '' }}">
+                <i class="fas fa-angle-left"></i>
+            </a>
+        </li>
+        {% set pages = (total / limit)|round(0, 'ceil') %}
+        {% for item in 1..pages %}
+            <li class="{{ (page == item) ? 'active' : '' }}">
+                <a href="?page={{ item }}">{{ item }}</a>
+            </li>
+        {% endfor %}
+        <li class="{{ (page == pages) ? 'disabled' : '' }}">
+            <a href="{{ (page < pages) ? '?page=' ~ (page + 1) : '' }}">
+                <i class="fas fa-angle-right"></i>
+            </a>
+        </li>
+        <li class="{{ (page == pages) ? 'disabled' : '' }}">
+            <a href="?page={{ pages }}">
+                <i class="fas fa-step-forward"></i>
+            </a>
+        </li>
+
+    </ul>
 
         </div>
     </div>
 
-    <script src="js/filters.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/mainsidebar.js"></script>
+
 
     <script>
         // Add event listener to update event buttons
@@ -141,6 +147,76 @@
                 window.location.href = '/update-event/' + eventId;
             });
         });
+
+   window.onload = () => {
+     const FiltersForm = document.querySelector("#filters");
+
+    // On boucle sur les input
+      document.querySelectorAll("#filters input").forEach(input => {
+        input.addEventListener("change", () => {
+            // Ici on intercepte les clics
+            // On récupère les données du formulaire
+            const Form = new FormData(FiltersForm);
+
+            // On fabrique la "queryString"
+            const Params = new URLSearchParams();
+            Form.forEach((value, key) => {
+                Params.append(key, value);
+                console.log(Params.toString());
+            });
+
+            // On récupère l'url active
+            const Url = new URL(window.location.href);
+
+            // On lance la requête ajax
+            fetch(Url.pathname + "?" + Params.toString() + "&ajax=1", {
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            }).then(response => 
+                response.json()
+            ).then(data => {
+                // On va chercher la zone de contenu
+                const content = document.querySelector("#content");
+
+                // On remplace le contenu
+                content.innerHTML = data.content;
+
+                // On met à jour l'url
+                history.pushState({}, null, Url.pathname + "?" + Params.toString());
+            }).catch(e => alert(e));
+        });
+    });
+}
     </script>
+    <script>
+    document.querySelectorAll('.register-interest-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const eventId = this.getAttribute('data-event-id');
+
+            // Send an AJAX request to the controller endpoint
+            fetch('/register-interest', {
+                method: 'POST',
+                body: JSON.stringify({ eventId: eventId }), // Send the event ID in the request body
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Handle successful registration
+                    alert('You are interested in this event!');
+                } else {
+                    // Handle error
+                    alert('Error registering interest for the event.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    });
+</script>
+
 
 {% endblock %}

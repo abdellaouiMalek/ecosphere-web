@@ -49,6 +49,7 @@
 </head>
 <body>
 {{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }}
+    {{ form_row(form._token) }}
 <div class="container">
     <div class="wrapper">
         <form action="" id="wizard" method="post">

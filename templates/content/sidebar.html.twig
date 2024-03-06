@@ -1,0 +1,38 @@
+<nav id="sidebar">
+            <div class="custom-menu">
+                <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                    <i class="fa fa-bars"></i>
+                    <span class="sr-only">Toggle Menu</span>
+                </button>
+            </div>
+            <div class="p-4">
+                <ul class="list-unstyled components mb-5">
+                    {% if app.user %}
+                        <div class="mb-3">
+                            You are logged in as {{ app.user.userIdentifier }} 
+                        </div>
+                    {% endif %}
+                    <li class="active">
+                        <a href="{{ path('app_events') }}"><span class="fa fa-home mr-3"></span> Events</a>
+                    </li>
+                    <li>
+                        <a href="#"><span class="fa fa-user mr-3"></span> Filter</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_Myevents') }}"><span class="fa fa-briefcase mr-3"></span> My events</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_user_events') }}"><span class="fa fa-sticky-note mr-3"></span> Manage my events</a>
+                    </li>
+                    {% if not app.user %}
+                        <li>
+                            <a href="{{ path('app_login') }}"><span class="fa fa-cogs mr-3"></span> Sign in</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{{ path('app_logout') }}"><span class="fa fa-paper-plane mr-3"></span> Logout</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>

@@ -53,6 +53,9 @@ class Event
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $active = null;
+
 
 
     public function __construct()
@@ -259,6 +262,18 @@ class Event
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(?bool $active): static
+    {
+        $this->active = $active;
 
         return $this;
     }

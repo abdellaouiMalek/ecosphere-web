@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\EventRepository;
 use App\Repository\CategoryRepository;
+use Doctrine\DBAL\Query\Limit;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -20,6 +21,12 @@ use Knp\Component\Pager\PaginatorInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Contracts\Cache\CacheInterface;
+
+
+
 
 class EventsController extends AbstractController
 {
@@ -35,68 +42,106 @@ class EventsController extends AbstractController
     }
 
     #[Route('/events', name: 'app_events')]
-    public function index(EventRepository $eventRepository, CategoryRepository $categoryRepository, PaginatorInterface $paginatorInterface, Request $request): Response
-    {
-        $events = $eventRepository->findAll();
-        $category = $categoryRepository->findAll();
-        $events = $paginatorInterface->paginate($events, $request->query->getInt('page',1),8);
+public function index(EventRepository $eventRepository, CategoryRepository $categoryRepository, PaginatorInterface $paginatorInterface, Request $request, CacheInterface $cache): Response
+{
+    // Define the number of elements per page
+    $limit = 8;
 
-        return $this->render('events/eventsHomePage.html.twig', [
-            'events' => $events, 'category' => $category,
+    // Get the page number
+    $page = (int) $request->query->get("page", 1);
+
+    // Get the filters
+    $filters = $request->get("category");
+
+    // Get paginated events based on the filter
+    $events = $eventRepository->getPaginatedEvents($page, $limit, $filters);
+
+    // Get the total number of events
+    $total = $eventRepository->getTotalEvents($filters);
+
+    
+    // On vérifie si on a une requête Ajax
+    if ($request->get('ajax')) {
+        return new JsonResponse([
+            'content' => $this->renderView('events/eventsHomePage.html.twig', compact('events', 'total', 'limit', 'page', 'category'))
         ]);
     }
+    // Fetch categories from cache or repository
+    $category = $cache->get('category', function(ItemInterface $item) use($categoryRepository) {
+        $item->expiresAfter(3600);
+        return $categoryRepository->findAll();
+    });
+
+    return $this->render('events/eventsHomePage.html.twig', [
+        'events' => $events,
+        'total' => $total,
+        'limit' => $limit,
+        'page' => $page,
+        'category' => $category
+    ]);
+}
+
 
     #[Route('/add-event', name: 'app_add_event')]
-    public function addEvent(Request $request, SluggerInterface $slugger): Response
-    {
-        // Create a new Event entity
-        $event = new Event();
+public function addEvent(Request $request, SluggerInterface $slugger, Security $security): Response
+{
+    // Create a new Event entity
+    $event = new Event();
 
-        // Handle form submission
-        $form = $this->createForm(EventFormType::class, $event);
-        $form->handleRequest($request);
+    // Set the currently logged-in user as the creator of the event
+    $user = $security->getUser();
+    if (!$user) {
+        // Handle case when user is not authenticated
+        // For example, redirect to login page
+        return $this->redirectToRoute('app_login');
+    }
+    $event->addUser($user); // Associate the event with the user
 
-        if ($form->isSubmitted() && $form->isValid()) {
-           /** @var UploadedFile $picture */
-           $picture = $form->get('picture')->getData();
+    // Handle form submission
+    $form = $this->createForm(EventFormType::class, $event);
+    $form->handleRequest($request);
 
-           // this condition is needed because the 'brochure' field is not required
-           // so the PDF file must be processed only when a file is uploaded
-           if ($picture) {
-               $originalFilename = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
-               // this is needed to safely include the file name as part of the URL
-               $safeFilename = $slugger->slug($originalFilename);
-               $newFilename = $safeFilename.'-'.uniqid().'.'.$picture->guessExtension();
+    if ($form->isSubmitted() && $form->isValid()) {
+       /** @var UploadedFile $picture */
+       $picture = $form->get('picture')->getData();
 
-               // Move the file to the directory where brochures are stored
-               try {
-                   $picture->move(
-                       $this->getParameter('images_directory'),
-                       $newFilename
-                   );
-               } catch (FileException $e) {
-                   // ... handle exception if something happens during file upload
-               }
+       // this condition is needed because the 'brochure' field is not required
+       // so the PDF file must be processed only when a file is uploaded
+       if ($picture) {
+           $originalFilename = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
+           // this is needed to safely include the file name as part of the URL
+           $safeFilename = $slugger->slug($originalFilename);
+           $newFilename = $safeFilename.'-'.uniqid().'.'.$picture->guessExtension();
 
-               // updates the 'picturename' property to store the PDF file name
-               // instead of its contents
-               $event->setImage($newFilename);
+           // Move the file to the directory where brochures are stored
+           try {
+               $picture->move(
+                   $this->getParameter('images_directory'),
+                   $newFilename
+               );
+           } catch (FileException $e) {
+               // ... handle exception if something happens during file upload
            }
 
-            // Save the event to the database
-            $entityManager = $this->managerRegistry->getManager();
-            $entityManager->persist($event);
-            $entityManager->flush();
+           // updates the 'picturename' property to store the PDF file name
+           // instead of its contents
+           $event->setImage($newFilename);
+       }
 
-            // Redirect to the home page or display a success message
-            return $this->redirectToRoute('app_events');
-        }
+        // Save the event to the database
+        $entityManager = $this->managerRegistry->getManager();
+        $entityManager->persist($event);
+        $entityManager->flush();
 
-        // Render the add event form template with the form
-        return $this->render('events/addevent.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        // Redirect to the home page or display a success message
+        return $this->redirectToRoute('app_events');
     }
+
+    // Render the add event form template with the form
+    return $this->render('events/addevent.html.twig', [
+        'form' => $form->createView(),
+    ]);
+}
     #[Route('/event/{id}', name: 'more_details')]
     public function moreDetails($id): Response
     {
