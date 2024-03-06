@@ -1,0 +1,66 @@
+{% apply inline_css %}
+    <style>
+        /* Define your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo {
+            max-width: 150px;
+            height: auto;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        p {
+            color: #666;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+{% endapply %}
+
+<div class="container">
+    <div class="header">
+        <img src="{{ absolute_url(asset('img/logo.png')) }}" class="logo" alt="Logo">
+    </div>
+    <div class="content">
+        <h1>Welcome !</h1>
+        <p>
+            Thank you for joining us. We are excited to have you on board.
+            Let's make a difference together!
+        </p>
+        <p>
+            Here are the details of the event you're interested in:
+        </p>
+        <ul>
+            <li><strong>Event Name:</strong> {{ event.eventName }}</li>
+            <li><strong>Address:</strong> {{ event.address }}</li>
+            <li><strong>Date:</strong> {{ event.date|date('Y-m-d') }}</li>
+            <li><strong>Time:</strong> {{ event.time|date('H:i:s') }}</li>
+            <li><strong>Location:</strong> {{ event.location }}</li>
+        </ul>
+    </div>
+</div>

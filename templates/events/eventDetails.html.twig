@@ -59,6 +59,8 @@
 
 
 </style>
+    {% include 'content/sidebar.html.twig' %}
+
 <body>
 <div class="container mt-5">
     <div class="row">
@@ -87,7 +89,7 @@
         </div>
         <div class="col-md-6">
     {% if event.image %}
-        <img src="{{ asset('public/uploads/images/' ~ event.image) }}" alt="Event Image" class="img-fluid rounded mx-auto d-block h-100"> 
+        <img src="{{ asset('uploads/images/' ~ event.image) }}" alt="Event Image" class="img-fluid rounded mx-auto d-block h-100"> 
     {% else %}
         <p>No image available</p>
     {% endif %}

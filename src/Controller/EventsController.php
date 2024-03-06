@@ -53,6 +53,7 @@ public function index(EventRepository $eventRepository, CategoryRepository $cate
     // Get the filters
     $filters = $request->get("category");
 
+
     // Get paginated events based on the filter
     $events = $eventRepository->getPaginatedEvents($page, $limit, $filters);
 
@@ -63,7 +64,7 @@ public function index(EventRepository $eventRepository, CategoryRepository $cate
     // On vérifie si on a une requête Ajax
     if ($request->get('ajax')) {
         return new JsonResponse([
-            'content' => $this->renderView('events/eventsHomePage.html.twig', compact('events', 'total', 'limit', 'page', 'category'))
+            'content' => $this->renderView('events/eventsHomePage.html.twig', compact('events', 'total', 'limit', 'page'))
         ]);
     }
     // Fetch categories from cache or repository
@@ -78,6 +79,7 @@ public function index(EventRepository $eventRepository, CategoryRepository $cate
         'limit' => $limit,
         'page' => $page,
         'category' => $category
+        
     ]);
 }
 
