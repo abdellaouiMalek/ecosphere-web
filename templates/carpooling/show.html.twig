@@ -1,0 +1,52 @@
+{#show.html.twig#}
+{% extends 'base.html.twig' %}
+
+{% block title %}Carpooling{% endblock %}
+
+{% block body %}
+
+    <h1>Carpooling</h1>
+    
+{% if reservation_success %}
+        <div class="alert alert-success" role="alert">
+            Reservation successfully added!
+        </div>
+    {% endif %}
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Driver</th>
+            <td>{{ carpooling.user.firstName }} {{ carpooling.user.lastName }}</td>
+        </tr>
+            <tr>
+                <th>DepartureDate</th>
+                <td>{{ carpooling.departureDate ? carpooling.departureDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>ArrivalDate</th>
+                <td>{{ carpooling.arrivalDate ? carpooling.arrivalDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DaparturePlace</th>
+                <td>{{ carpooling.departure }}</td>
+            </tr>
+            <tr>
+                <th>destination</th>
+                <td>{{ carpooling.destination }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ carpooling.price }}</td>
+            </tr>
+            <tr>
+                <th>Time</th>
+                <td>{{ carpooling.time ? carpooling.time|date('H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+        <a href="{{ path('app_make_reservation', {'id': carpooling.id}) }}" class="btn btn-success">Make Reservation</a>
+
+<a href="{{ path('app_my_carpoolings')  }}" class="btn btn-primary">Show All My Carpoolings</a>
+    <a href="{{ path('app_carpooling_edit', {'id': carpooling.id}) }}">edit</a>
+    {{ include('carpooling/_delete_form.html.twig') }}
+{% endblock %}

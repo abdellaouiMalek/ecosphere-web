@@ -1,34 +1,69 @@
-{% extends 'base.html.twig' %}
+{% extends 'carpooling/indexBase.html.twig' %}
 
-{% block title %}Search Results{% endblock %}
+{% block title %}Search Results
+{% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('public/js/carpooling.js') }}"></script>
+	{{ parent() }}
+	<script src="{{ asset('public/js/carpooling.js') }}"></script>
 {% endblock %}
 
 {% block body %}
-    <h1>Search Results</h1>
-    
-    {% if results is not empty %}
-        <ul>
-            {% for result in results %}
-                <li>
-                    <strong>Departure:</strong> {{ result.departure }}<br>
-                    <strong>Destination:</strong> {{ result.destination }}<br>
-                    <strong>Departure Date:</strong> {{ result.departureDate }}<br>
-                    <strong>Departure Time:</strong> {{ result.time|date('H:i:s') }}<br>
-                    <strong>Price:</strong> {{ result.price }}<br>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No results found.</p>
-    {% endif %}
-    <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="sortPriceCheckbox" name="sortPrice">
-        <label class="form-check-label" for="sortPriceCheckbox">Sort by Price</label>
-    </div>
+	<div class="site-section bg-light">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-7">
+					<h2 class="section-heading">
+						<strong>Carpooling Listings</strong>
+					</h2>
+					<p class="mb-5">Here you can find your search postings.</p>
+				</div>
+			</div>
+			<div class="row">
+				{% if results is not empty %}
+					{% for result in results %}
+						<div class="col-md-6 col-lg-4 mb-4">
+							<div class="listing d-block  align-items-stretch">
+								<div class="listing-img h-100 mr-4">
+									<img src="images/car_6.jpg" alt="Image" class="img-fluid">
+								</div>
+								<div class="listing-contents h-100">
+									<span class="caption">Destination
+										<strong>{{ result.destination }}</strong>
+										<br>
+										<div class="rent-price">
+											<strong>Price:</strong>
+											{{ result.price }}
+											<span class="mx-1">/</span>DT
+										</div>
+										<div class="d-block d-md-flex mb-3 border-bottom pb-3">
+											<div class="listing-feature pr-4">
+												<span class="caption">From
+													<strong>{{ result.departure }}</strong>
+													<br>
+												</div>
+											</div>
+											<div>
+												<p>The
+													<strong>{{ result.departureDate }}</strong>
+													<br>
+													At
+													<strong>{{ result.time|date('H:i:s') }}</strong>
+													<br></p>
 
-    <div id="searchResults"></div> {# Added an empty div to display search results #}
-{% endblock %}
+											</div>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						{% else %}
+							<p>No results found.</p>
+						{% endif %}
+						<div class="form-group form-check">
+							<input type="checkbox" class="form-check-input" id="sortPriceCheckbox" name="sortPrice">
+							<label class="form-check-label" for="sortPriceCheckbox">Sort by Price</label>
+						</div>
+
+						<div id="searchResults"></div>
+						{# Added an empty div to display search results #}
+					{% endblock %}

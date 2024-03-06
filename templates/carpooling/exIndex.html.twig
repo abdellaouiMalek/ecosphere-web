@@ -5,19 +5,19 @@
 
 {% block body %}
 
-<input id="search-input" type="form-control" placeholder="Search...">
-<title>AJAX Search Example</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $("#search-input").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("table tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
+	<input id="search-input" type="form-control" placeholder="Search...">
+	<title>AJAX Search Example</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function () {
+$("#search-input").on("keyup", function () {
+var value = $(this).val().toLowerCase();
+$("table tr").filter(function () {
+$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+});
+});
+});
+	</script>
 	<div class="site-section bg-light">
 		<div class="container">
 			<div class="row">
@@ -37,23 +37,23 @@
 								<img src="images/car_6.jpg" alt="Image" class="img-fluid">
 							</div>
 							<div class="listing-contents h-100">
-								<h3>To
-									{{ carpooling.arrivalPlace}}</h3>
+								<strong>Departure:</strong>
+								{{ result.departure }}<br>
 								<div class="rent-price">
-									<strong>{{ carpooling.price }}</strong>
+                    <strong>Price:</strong> {{ result.price }}<br>
 									<span class="mx-1">/</span>DT
 								</div>
 								<div class="d-block d-md-flex mb-3 border-bottom pb-3">
 									<div class="listing-feature pr-4">
 										<span class="caption">From
-											{{ carpooling.destination }}</span>
+                    <strong>Destination:</strong> {{ result.destination }}<br>
 									</div>
 								</div>
 								<div>
 									<p>The
-										{{carpooling.departureDate ? carpooling.departureDate|date('Y-m-d') : ''  }}
+                    <strong>Departure Date:</strong> {{ result.departureDate }}<br>
 										at
-										{{ carpooling.time ? carpooling.time|date('H:i:s') : '' }}</p>
+                    <strong>Departure Time:</strong> {{ result.time|date('H:i:s') }}<br>
 									<p>
 										<a href="{{ path('app_carpooling_show', {'id': carpooling.id}) }}" class="btn btn-primary btn-sm">
 											show</a>

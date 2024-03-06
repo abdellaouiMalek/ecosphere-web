@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "909281f31f3bd11486358532a94000b2",
+    "content-hash": "c511238ee3537d5a0d17ccd95a4f90e1",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -3265,6 +3265,101 @@
             "time": "2024-01-30T20:00:46+00:00"
         },
         {
+            "name": "symfony/notifier",
+            "version": "v5.4.35",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/notifier.git",
+                "reference": "96c5ff38efab8031d3396d4cd4743a1776f31c69"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/notifier/zipball/96c5ff38efab8031d3396d4cd4743a1776f31c69",
+                "reference": "96c5ff38efab8031d3396d4cd4743a1776f31c69",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5",
+                "psr/log": "^1|^2|^3",
+                "symfony/polyfill-php80": "^1.15"
+            },
+            "conflict": {
+                "symfony/discord-notifier": "<5.3",
+                "symfony/esendex-notifier": "<5.3",
+                "symfony/firebase-notifier": "<5.3",
+                "symfony/free-mobile-notifier": "<5.3",
+                "symfony/google-chat-notifier": "<5.3",
+                "symfony/http-kernel": "<4.4",
+                "symfony/infobip-notifier": "<5.3",
+                "symfony/linked-in-notifier": "<5.3",
+                "symfony/mattermost-notifier": "<5.3",
+                "symfony/mobyt-notifier": "<5.3",
+                "symfony/nexmo-notifier": "<5.3",
+                "symfony/ovh-cloud-notifier": "<5.3",
+                "symfony/rocket-chat-notifier": "<5.3",
+                "symfony/sendinblue-notifier": "<5.3",
+                "symfony/sinch-notifier": "<5.3",
+                "symfony/slack-notifier": "<5.3",
+                "symfony/sms77-notifier": "<5.3",
+                "symfony/smsapi-notifier": "<5.3",
+                "symfony/telegram-notifier": "<5.3",
+                "symfony/twilio-notifier": "<5.3",
+                "symfony/zulip-notifier": "<5.3"
+            },
+            "require-dev": {
+                "symfony/event-dispatcher-contracts": "^2|^3",
+                "symfony/http-client-contracts": "^2|^3",
+                "symfony/messenger": "^4.4|^5.0|^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Notifier\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Sends notifications via one or more channels (email, SMS, ...)",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "notification",
+                "notifier"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/notifier/tree/v5.4.35"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-01-23T13:51:25+00:00"
+        },
+        {
             "name": "symfony/options-resolver",
             "version": "v5.4.21",
             "source": {
@@ -5670,6 +5765,55 @@
                 }
             ],
             "time": "2023-11-21T18:54:41+00:00"
+        },
+        {
+            "name": "twilio/sdk",
+            "version": "7.16.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:twilio/twilio-php.git",
+                "reference": "b5578d953c8d126b3d13b2440d21c68460035265"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/b5578d953c8d126b3d13b2440d21c68460035265",
+                "reference": "b5578d953c8d126b3d13b2440d21c68460035265",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "^6.3 || ^7.0",
+                "phpunit/phpunit": ">=7.0 < 10"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "An HTTP client to execute the API requests"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Twilio\\": "src/Twilio/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Twilio API Team",
+                    "email": "api@twilio.com"
+                }
+            ],
+            "description": "A PHP wrapper for Twilio's API",
+            "homepage": "https://github.com/twilio/twilio-php",
+            "keywords": [
+                "api",
+                "sms",
+                "twilio"
+            ],
+            "time": "2024-02-27T14:19:44+00:00"
         }
     ],
     "packages-dev": [

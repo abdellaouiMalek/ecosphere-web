@@ -1,0 +1,17 @@
+{# Your Twig template file #}
+
+{# Render the form start tag #}
+{{ form_start(form) }}
+
+{# Render the price field #}
+<div class="form-group">
+    {{ form_label(form.price, 'price') }}
+    {{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.price) }}
+</div>
+
+{# Render the submit button #}
+<button type="submit" class="btn btn-primary">Submit</button>
+
+{# Render the form end tag #}
+{{ form_end(form) }}

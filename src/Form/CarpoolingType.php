@@ -27,6 +27,12 @@ class CarpoolingType extends AbstractType
                 ] 
             ])
            
+            ->add('destination' , TextType::class , [
+                'constraints' => [
+                    new NotBlank(['message' => 'You have to mention the departure place',
+                ]),
+                ] 
+            ])
            
            
           /*  ->add('departureDate', DateType::class ,  [

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CarpoolingRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -40,6 +42,14 @@ class Carpooling
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?CarpoolingRequest $carpooling_request = null;
+
+    #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'carpooling',cascade: ['remove'])]
+    private Collection $reservations;
+
+    public function __construct()
+    {
+        $this->reservations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -139,6 +149,36 @@ class Carpooling
     public function setDestination(string $destination): static
     {
         $this->destination = $destination;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): static
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->setCarpooling($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): static
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getCarpooling() === $this) {
+                $reservation->setCarpooling(null);
+            }
+        }
 
         return $this;
     }
