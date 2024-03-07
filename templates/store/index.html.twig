@@ -1,43 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Store index
-{% endblock %}
+{% block title %}Store index{% endblock %}
 
 {% block body %}
-	<div class="container" style="padding: 20px;">
+<div class="container" style="padding: 20px;">
 
-		<div class="row mb-3">
-			<div class="col">
-				<h1>Store Index</h1>
-			</div>
-			<div class="col text-end">
-				<a href="{{ path('app_store_new') }}" class="btn btn-primary">+ Create Store</a>
-			</div>
-		</div>
+   <div class="row mb-3">
+        <div class="col">
+            <h1>Store Index</h1>
+        </div>
+        <div class="col text-end">
+            <a href="{{ path('app_store_new') }}" class="btn btn-primary">+ Create Store</a>
+        </div>
+    </div>
 
-		<div class="row">
-			{% for store in stores %}
-				<div class="col-md-4 mb-4">
-					<div class="card shadow-sm" style="padding: 20px; max-width: 1100px;">
-						{% if store.photo %}
-							<img src="{{ asset('uploads/images/' ~ store.photo) }}" alt="Uploaded Image">
-						{% endif %}
-						<div class="card-body">
-							<h5 class="card-title">{{ store.StoreName }}</h5>
-							<p class="card-text">{{ store.address }}</p>
-							<p class="card-text">{{ store.phoneNumber }}</p>
-							<div class="mt-auto" >
-								<div class="btn-group d-flex justify-content-center">
-									<a href="{{ path('app_store_show', {'id': store.id}) }}" class="btn btn-sm btn-outline-secondary mx-1">Show</a>
-									<a href="{{ path('app_store_edit', {'id': store.id}) }}" class="btn btn-sm btn-outline-secondary mx-1">Edit</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			{% endfor %}
-		</div>
+<div class="row">
+    {% for store in stores %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm" style="padding: 20px; max-width: 1100px;">
+                {% if store.photo %}
+        <img src="{{ asset('uploads/images/' ~ store.photo) }}" alt="Uploaded Image">
+    {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ store.StoreName }}</h5>
+                    <p class="card-text">{{ store.address }}</p>
+                    <p class="card-text">{{ store.phoneNumber }}</p>
+                    <div class="mt-auto">
+                            <div class="btn-group d-flex justify-content-center">
+                                <a href="{{ path('app_store_show', {'id': store.id}) }}" class="btn btn-sm btn-outline-secondary mx-1">Show</a>
+                                <a href="{{ path('app_store_edit', {'id': store.id}) }}" class="btn btn-sm btn-outline-secondary mx-1">Edit</a>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
 
-
-	</div>
+    
+    </div>
 {% endblock %}
