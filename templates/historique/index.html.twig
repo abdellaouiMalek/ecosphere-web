@@ -35,7 +35,7 @@
         {% for historique in historiques %}
             <tr>
                 <td>{{ historique.id }}</td>
-                <td>{{ historique.nom_o }}</td>
+                <td>{{ historique.getNomo() }}</td>
                 <td>{{ historique.initialCondition }}</td>
                 <td>{{ historique.date | date}}</td>
 
@@ -52,6 +52,7 @@
         {% endfor %}
         </tbody>
     </table>
+        <a href="{{ path('app_objet_index') }}"class="btn btn-secondary">back to Objet</a>
 {% endblock %}
 
 

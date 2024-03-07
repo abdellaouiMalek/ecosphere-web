@@ -52,7 +52,7 @@ class ObjetType extends AbstractType
                     'Bad' => 'Bad',
                 ],
                 ])
-            ->add('prix', MoneyType::class) 
+            ->add('prix') 
             
         ;
     }

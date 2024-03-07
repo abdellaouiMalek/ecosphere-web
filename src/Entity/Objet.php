@@ -65,13 +65,12 @@ class Objet
     private Collection $Historique;
 
 
-
-    #[ORM\Column]
-    #[Assert\NotBlank(message: "Le prix ne doit pas être vide.")]
-    #[Assert\GreaterThan(
-        value: 0,
-        message: "Le prix doit être supérieur à 0."
-    )]
+    /**
+     * @ORM\Column
+     * @Assert\Type(type="integer", message="Le prix doit être un nombre entier")
+     * @Assert\GreaterThan(value=0, message="Le prix doit être supérieur à zéro")
+     */
+    #[ORM\Column(nullable: true)]
     private ?int $prix = null;
 
     #[ORM\Column(length: 255, nullable: true)]
