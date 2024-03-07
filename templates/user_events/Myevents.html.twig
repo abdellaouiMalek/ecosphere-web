@@ -7,7 +7,12 @@
     
     <div class="wrapper d-flex align-items-stretch">
         
-    {% include 'content/sidebar.html.twig' %}
+    <style>
+    body {
+        background-color: #f0fff0; /* Light green background color */
+    }
+    
+</style>
         <!-- Page Content -->
         <div id="content" class="p-4 p-md-5 pt-5">
             <section id="community-events" class="text-center py-5">
@@ -23,7 +28,7 @@
                     {% for event in Myevents %}
                         <div class="col-md-3 mb-4">
                             <div class="card h-100 shadow position-relative">
-                                <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp" class="card-img-top" alt="Hollywood Sign on The Hill"/>
+                                <img src="{{ asset('uploads/images/' ~ event.event.image) }}" class="card-img-top" alt="Event Image"/>
                                 <div class="card-body position-relative">
                                     <!-- Date Container -->
                                     <div class="date-container bg-success text-white p-2 position-absolute top-0 start-0">
@@ -39,7 +44,7 @@
                                     <!-- More Details Link -->
                                     <a href="{{ path('more_details', {id:event.event.id}) }}" class="position-absolute bottom-0 start-0 p-3 text-decoration-none">More Details</a>
                                 </div>
-                                <!-- Edit and Delete Event Buttons -->
+                                <a href="{{ path('app_delete_eventintrest', {id:event.id}) }}" class="btn btn-danger">Not intrested</a>
                                 
                             </div>
                         </div>

@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\EventRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\EventRatingRepository;
 use Doctrine\DBAL\Query\Limit;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -146,7 +147,7 @@ public function addEvent(Request $request, SluggerInterface $slugger, Security $
 }
 #[Route('/event/{id}', name: 'more_details')]
 #[Route('/save-rating/{id}', name: 'save_rating', methods: ['GET', 'POST'])]
-public function eventDetails(Request $request, EntityManagerInterface $entityManager, $id): Response
+public function eventDetails(Request $request, EntityManagerInterface $entityManager, $id, EventRatingRepository $eventRatingRepository): Response
 {
     $event = $this->managerRegistry->getRepository(Event::class)->find($id);
 
@@ -166,9 +167,10 @@ public function eventDetails(Request $request, EntityManagerInterface $entityMan
             return new JsonResponse(['error' => 'No rating selected'], Response::HTTP_BAD_REQUEST);
         }
     }
+    $starRatingsCount = $eventRatingRepository->getStarRatingsCount();
 
     return $this->render('events/eventDetails.html.twig', [
-        'event' => $event,
+        'event' => $event,'starRatingsCount' => $starRatingsCount,
     ]);
 }
     
@@ -179,7 +181,7 @@ public function eventDetails(Request $request, EntityManagerInterface $entityMan
     $event = $entityManager->getRepository(Event::class)->find($id);
     $entityManager->remove($event);
     $entityManager->flush();
-    return $this->redirectToRoute('app_events');
+    return $this->redirectToRoute('app_user_events');
     }
 
     

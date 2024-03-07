@@ -4,61 +4,78 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/stylesidebar.css">
+    <style>
+    body {
+        background-color: #f0fff0; /* Light green background color */
+    }
+    
+</style>
+    <style>
+    .card-img-container {
+    height: 200px; /* Adjust as needed */
+    overflow: hidden;
+}
+
+.card-img-container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+    </style>
     
     <div class="wrapper d-flex align-items-stretch">
         
-    {% include 'content/sidebar.html.twig' %}
         <!-- Page Content -->
         <div id="content" class="p-4 p-md-5 pt-5">
             <section id="community-events" class="text-center py-5">
                 <div class="container">
-                    <h2 class="section-title">Community Events</h2>
+                    <h2 class="section-title">My Events</h2>
                     <p class="section-description">Discover upcoming events in our community.</p>
                 </div>
             </section>
-
-            <div class="bg-primary text-white p-4 mb-3 text-center">
-                <p class="lead mb-0">Have an event to suggest? Click below to add it and fill the form with the necessary details!</p>
+<div class="bg-primary text-white p-4 mb-3 text-center">
+                <p class="lead mb-0">Have any other event suggestions? Click below to add it and fill the form with the necessary details!</p>
                 <a href="{{ path('app_add_event') }}" class="btn btn-light mt-3">Add Event</a>
             </div>
+            
 
             <div class="container-fluid" style="padding-left: 15px; padding-right: 15px;">
-                <!-- Add Event Context -->
-                <div class="row">
-                    {% for event in events %}
-                        <div class="col-md-3 mb-4">
-                            <div class="card h-100 shadow position-relative">
-                                <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp" class="card-img-top" alt="Hollywood Sign on The Hill"/>
-                                <div class="card-body position-relative">
-                                    <!-- Date Container -->
-                                    <div class="date-container bg-success text-white p-2 position-absolute top-0 start-0">
-                                        <p class="mb-0">{{ event.date ? event.date|date('m/d/Y') : '' }}</p>
-                                    </div>
-
-                                    <h5 class="card-title" style="margin-top: 40px;">{{ event.eventName }}</h5>
-
-                                    <p class="card-text">
-                                        <p><strong>Location:</strong> {{ event.location }}</p>
-                                        <p>{{ event.objective }}</p>
-                                    </p>
-                                    <!-- More Details Link -->
-                                    <a href="{{ path('more_details', {id:event.id}) }}" class="position-absolute bottom-0 start-0 p-3 text-decoration-none">More Details</a>
-                                </div>
-                                <!-- Edit and Delete Event Buttons -->
-                                <div class="position-absolute bottom-0 end-0 p-2">
-                                    <button class="btn btn-primary me-2 updateEventBtn" data-event-id="{{ event.id }}">Edit</button>
-                                    <a href="{{ path('app_delete_event', {id:event.id}) }}" class="btn btn-danger">Delete</a>
-                                </div>
-                            </div>
+    <!-- Add Event Context -->
+    <div class="row">
+        {% for event in events %}
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 shadow position-relative">
+                    <div class="card-img-container">
+                        <img src="{{ asset('uploads/images/' ~ event.image) }}" class="card-img-top" alt="Event Image"/>
+                    </div>
+                    <div class="card-body position-relative">
+                        <!-- Date Container -->
+                        <div class="date-container bg-success text-white p-2 position-absolute top-0 start-0">
+                            <p class="mb-0">{{ event.date ? event.date|date('m/d/Y') : '' }}</p>
                         </div>
-                    {% endfor %}
+                        <h5 class="card-title" style="margin-top: 40px;">{{ event.eventName }}</h5>
+                        <p class="card-text">
+                            <p><strong>Location:</strong> {{ event.location }}</p>
+                            <p><strong>Category:</strong> {{ event.category.name }}</p>
+                        </p>
+                        <!-- More Details Link -->
+                        <a href="{{ path('more_details', {id:event.id}) }}" class="position-absolute bottom-0 start-0 p-3 text-decoration-none">More Details</a>
+                    </div>
+                    <!-- Edit and Delete Event Buttons -->
+                    <div class="position-absolute bottom-0 end-0 p-2">
+                        <button class="btn btn-primary me-2 updateEventBtn" data-event-id="{{ event.id }}">Edit</button>
+                        <a href="{{ path('app_delete_event', {id:event.id}) }}" class="btn btn-danger">Delete</a>
+                    </div>
                 </div>
             </div>
-            <div class="navigation">
-                <!-- Navigation content -->
-            </div>
+        {% endfor %}
+    </div>
+</div>
+
+            
         </div>
     </div>
+    
 
     <!-- JavaScript imports -->
     <script src="js/jquery.min.js"></script>

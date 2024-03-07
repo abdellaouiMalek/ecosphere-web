@@ -91,7 +91,7 @@ class UserEventsController extends AbstractController
         $email = $user->getUserIdentifier();
 
         $email = (new Email())
-       ->from('wardiaziz2507@gmail.com')
+       ->from('ecosphere@gmail.com')
        ->to($email)
        ->subject('Time for Symfony Mailer!')
        ->html($this->renderView(
@@ -135,6 +135,22 @@ class UserEventsController extends AbstractController
             'Myevents' => $Myevents,
         ]);
     }
+
+    #[Route('/delete-event-intrest/{id}', name: 'app_delete_eventintrest')]
+public function deleteEventInterest($id): Response
+{
+    $entityManager = $this->managerRegistry->getManager();
+    $eventInterest = $entityManager->getRepository(EventRegistrations::class)->find($id);
+
+    if (!$eventInterest) {
+        throw $this->createNotFoundException('Interest not found for id '.$id);
+    }
+
+    $entityManager->remove($eventInterest);
+    $entityManager->flush();
+
+    return $this->redirectToRoute('app_Myevents');
+}
 
 
 }
