@@ -3,8 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\CarpoolingRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CarpoolingRepository::class)]
 class Carpooling
@@ -21,10 +24,11 @@ class Carpooling
     private ?\DateTimeInterface $arrivalDate = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $daparturePlace = null;
+   // #[Assert\NotBlank(message:"La description est obligatoire")]
+    private ?string $departure = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $arrivalPlace = null;
+    private ?string $destination = null;
 
     #[ORM\Column]
     private ?float $price = null;
@@ -33,11 +37,19 @@ class Carpooling
     private ?\DateTimeInterface $time = null;
 
     #[ORM\ManyToOne(inversedBy: 'carpooling')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $user ;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?CarpoolingRequest $carpooling_request = null;
+
+    #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'carpooling',cascade: ['remove'])]
+    private Collection $reservations;
+
+    public function __construct()
+    {
+        $this->reservations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -67,27 +79,16 @@ class Carpooling
 
         return $this;
     }
+    
 
-    public function getDaparturePlace(): ?string
+    public function getDeparture(): ?string
     {
-        return $this->daparturePlace;
+        return $this->departure;
     }
 
-    public function setDaparturePlace(string $daparturePlace): static
+    public function setDeparture(string $departure): static
     {
-        $this->daparturePlace = $daparturePlace;
-
-        return $this;
-    }
-
-    public function getArrivalPlace(): ?string
-    {
-        return $this->arrivalPlace;
-    }
-
-    public function setArrivalPlace(string $arrivalPlace): static
-    {
-        $this->arrivalPlace = $arrivalPlace;
+        $this->departure = $departure;
 
         return $this;
     }
@@ -136,6 +137,48 @@ class Carpooling
     public function setCarpoolingRequest(?CarpoolingRequest $carpooling_request): static
     {
         $this->carpooling_request = $carpooling_request;
+
+        return $this;
+    }
+
+    public function getDestination(): ?string
+    {
+        return $this->destination;
+    }
+
+    public function setDestination(string $destination): static
+    {
+        $this->destination = $destination;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): static
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->setCarpooling($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): static
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getCarpooling() === $this) {
+                $reservation->setCarpooling(null);
+            }
+        }
 
         return $this;
     }

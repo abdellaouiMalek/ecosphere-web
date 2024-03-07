@@ -144,39 +144,33 @@ public function addEvent(Request $request, SluggerInterface $slugger, Security $
         'form' => $form->createView(),
     ]);
 }
-    #[Route('/event/{id}', name: 'more_details')]
-    public function moreDetails($id): Response
-    {
-         $event = $this->managerRegistry->getRepository(Event::class)->find($id);
+#[Route('/event/{id}', name: 'more_details')]
+#[Route('/save-rating/{id}', name: 'save_rating', methods: ['GET', 'POST'])]
+public function eventDetails(Request $request, EntityManagerInterface $entityManager, $id): Response
+{
+    $event = $this->managerRegistry->getRepository(Event::class)->find($id);
 
-         return $this->render('events/eventDetails.html.twig', [
-            'event' => $event,
-         ]);
-    }
-
-    #[Route('/save-rating/{id}', name: 'save_rating', methods: ["POST"])]
-    public function saveRating(Request $request, EntityManagerInterface $entityManager, $id): JsonResponse
-    {
-        // Retrieve the rating value and event ID from the request
+    if ($request->isMethod('POST')) {
         $ratingValue = $request->request->get('rate');
-        
-       // $eventId = $request->request->get('event_id');
-    
-        // Find the event by its ID
-        $event = $entityManager->getRepository(Event::class)->find($id);
-        // Create a new EventRating entity and associate it with the event
-        $eventRating = new EventRating();
-        $eventRating->setRating($ratingValue);
-        $eventRating->setEvent($event);
-    
-        // Persist the EventRating entity
-        $entityManager->persist($eventRating);
-        $entityManager->flush();
-    
-        // Return a JSON response indicating success
-        return new JsonResponse(['success' => true]);
+
+        if ($ratingValue !== null) {
+            $eventRating = new EventRating();
+            $eventRating->setRating($ratingValue);
+            $eventRating->setEvent($event);
+
+            $entityManager->persist($eventRating);
+            $entityManager->flush();
+
+            return new JsonResponse(['success' => true]);
+        } else {
+            return new JsonResponse(['error' => 'No rating selected'], Response::HTTP_BAD_REQUEST);
+        }
     }
-    
+
+    return $this->render('events/eventDetails.html.twig', [
+        'event' => $event,
+    ]);
+}
     
     #[Route('/delete-event/{id}', name: 'app_delete_event')]
     public function deleteEvent($id): Response

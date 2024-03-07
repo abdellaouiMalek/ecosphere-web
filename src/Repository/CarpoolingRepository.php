@@ -20,6 +20,30 @@ class CarpoolingRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Carpooling::class);
     }
+    public function rechercherCovoiturages($criteria)
+    {
+        // Ajoutez des instructions dump() pour déboguer les critères de recherche
+        echo "Critères de recherche : --------------------------------------";
+        var_dump($criteria);
+        // Effectuez la logique de recherche
+        $queryBuilder = $this->createQueryBuilder('c');
+        
+        // Exemple : recherche par destination
+        if (!empty($criteria['destination'])) {
+            $queryBuilder->andWhere('c.destination = :destination')
+                         ->setParameter('destination', $criteria['destination']);
+        }
+
+        // Exécutez la requête
+        $results = $queryBuilder->getQuery()->getResult();
+
+        // Ajoutez des instructions dump() pour déboguer les résultats de la requête
+        echo "Résultats de la requête : ";
+        var_dump($results);
+        // Retournez les résultats
+        return $results;
+    }
+
 
 //    /**
 //     * @return Carpooling[] Returns an array of Carpooling objects
