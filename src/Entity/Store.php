@@ -24,6 +24,9 @@ class Store
     #[ORM\Column(length: 255)]
     private ?string $phoneNumber = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $photo = null;
+
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'store')]
     private Collection $users;
 
@@ -35,7 +38,10 @@ class Store
         $this->users = new ArrayCollection();
         $this->product = new ArrayCollection();
     }
-
+    public function __tostring():string
+    {
+        return $this->StoreName;
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -73,6 +79,17 @@ class Store
     public function setPhoneNumber(string $phoneNumber): static
     {
         $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(string $photo): static
+    {
+        $this->photo = $photo;
 
         return $this;
     }
