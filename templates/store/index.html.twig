@@ -3,37 +3,40 @@
 {% block title %}Store index{% endblock %}
 
 {% block body %}
-    <h1>Store index</h1>
+<div class="container" style="padding: 20px;">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>StoreName</th>
-                <th>Address</th>
-                <th>PhoneNumber</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for store in stores %}
-            <tr>
-                <td>{{ store.id }}</td>
-                <td>{{ store.StoreName }}</td>
-                <td>{{ store.address }}</td>
-                <td>{{ store.phoneNumber }}</td>
-                <td>
-                    <a href="{{ path('app_store_show', {'id': store.id}) }}">show</a>
-                    <a href="{{ path('app_store_edit', {'id': store.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+   <div class="row mb-3">
+        <div class="col">
+            <h1>Store Index</h1>
+        </div>
+        <div class="col text-end">
+            <a href="{{ path('app_store_new') }}" class="btn btn-primary">+ Create Store</a>
+        </div>
+    </div>
 
-    <a href="{{ path('app_store_new') }}">Create new</a>
+<div class="row">
+    {% for store in stores %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm" style="padding: 20px;">
+                {% if store.photo %}
+        <img src="{{ asset('uploads/images/' ~ store.photo) }}" alt="Uploaded Image">
+    {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ store.StoreName }}</h5>
+                    <p class="card-text">{{ store.address }}</p>
+                    <p class="card-text">{{ store.phoneNumber }}</p>
+                    <div class="mt-auto">
+                            <div class="btn-group d-flex justify-content-center">
+                                <a href="{{ path('app_store_show', {'id': store.id}) }}" class="btn btn-sm btn-outline-secondary mx-1">Show</a>
+                                <a href="{{ path('app_store_edit', {'id': store.id}) }}" class="btn btn-sm btn-outline-secondary mx-1">Edit</a>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+    
+    </div>
 {% endblock %}

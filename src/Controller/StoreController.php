@@ -30,9 +30,22 @@ class StoreController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Handle file upload
+            $file = $form->get('photo')->getData();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('upload_img'), $fileName);
+
+            // Set the uploaded file name to the store entity
+            $store->setPhoto($fileName);
+
+            // Construct the URL of the uploaded image
+            $imageUrl = $request->getSchemeAndHttpHost() . '/uploads/images/' . $fileName;
+
+            // Persist and flush the store entity
             $entityManager->persist($store);
             $entityManager->flush();
 
+            // Redirect to the index page
             return $this->redirectToRoute('app_store_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -53,20 +66,43 @@ class StoreController extends AbstractController
     #[Route('/{id}/edit', name: 'app_store_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Store $store, EntityManagerInterface $entityManager): Response
     {
+        // Store the existing photo file path
+        $existingPhoto = $store->getPhoto();
+    
         $form = $this->createForm(StoreType::class, $store);
+    
+    
+    
+        // Set the default data of the file input field to the existing photo path
+        $form->get('photo')->setData($existingPhoto);
+    
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            // If the form was submitted without uploading a new photo, set the photo back to the existing value
+           // Handle file upload
+           $file = $form->get('photo')->getData();
+           $fileName = md5(uniqid()).'.'.$file->guessExtension();
+           $file->move($this->getParameter('upload_img'), $fileName);
 
+           // Set the uploaded file name to the store entity
+           $store->setPhoto($fileName);
+
+           // Construct the URL of the uploaded image
+           $imageUrl = $request->getSchemeAndHttpHost() . '/uploads/images/' . $fileName;
+
+    
+            $entityManager->flush();
+    
             return $this->redirectToRoute('app_store_index', [], Response::HTTP_SEE_OTHER);
         }
-
+    
         return $this->renderForm('store/edit.html.twig', [
             'store' => $store,
             'form' => $form,
         ]);
     }
+    
 
     #[Route('/{id}', name: 'app_store_delete', methods: ['POST'])]
     public function delete(Request $request, Store $store, EntityManagerInterface $entityManager): Response
