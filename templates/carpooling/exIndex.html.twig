@@ -1,0 +1,73 @@
+{% extends 'carpooling/indexBase.html.twig' %}
+
+{% block title %}Carpooling index
+{% endblock %}
+
+{% block body %}
+
+	<input id="search-input" type="form-control" placeholder="Search...">
+	<title>AJAX Search Example</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function () {
+$("#search-input").on("keyup", function () {
+var value = $(this).val().toLowerCase();
+$("table tr").filter(function () {
+$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+});
+});
+});
+	</script>
+	<div class="site-section bg-light">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-7">
+					<h2 class="section-heading">
+						<strong>Carpooling Listings</strong>
+					</h2>
+					<p class="mb-5">Here you can find your carpool postings.</p>
+				</div>
+			</div>
+
+			<div class="row">
+				{% for carpooling in carpoolings %}
+					<div class="col-md-6 col-lg-4 mb-4">
+						<div class="listing d-block  align-items-stretch">
+							<div class="listing-img h-100 mr-4">
+								<img src="images/car_6.jpg" alt="Image" class="img-fluid">
+							</div>
+							<div class="listing-contents h-100">
+								<strong>Departure:</strong>
+								{{ result.departure }}<br>
+								<div class="rent-price">
+                    <strong>Price:</strong> {{ result.price }}<br>
+									<span class="mx-1">/</span>DT
+								</div>
+								<div class="d-block d-md-flex mb-3 border-bottom pb-3">
+									<div class="listing-feature pr-4">
+										<span class="caption">From
+                    <strong>Destination:</strong> {{ result.destination }}<br>
+									</div>
+								</div>
+								<div>
+									<p>The
+                    <strong>Departure Date:</strong> {{ result.departureDate }}<br>
+										at
+                    <strong>Departure Time:</strong> {{ result.time|date('H:i:s') }}<br>
+									<p>
+										<a href="{{ path('app_carpooling_show', {'id': carpooling.id}) }}" class="btn btn-primary btn-sm">
+											show</a>
+									</p>
+									<p>
+										<a href="{{ path('app_carpooling_edit', {'id': carpooling.id}) }}" class="btn btn-primary btn-sm">
+											edit</a>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+				<a href="{{ path('app_carpooling_new')}}" class="btn btn-primary btn-sm">add new
+				</a>
+
+			{% endblock %}

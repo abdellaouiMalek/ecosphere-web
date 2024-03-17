@@ -45,7 +45,6 @@
       </div>
     </div>
   </section><!-- End Top Bar-->
-
   <!-- ======= Header ======= -->
   <header id="header" class="d-flex align-items-center">
     <div class="container d-flex justify-content-between">
@@ -58,28 +57,11 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto active" href="/home">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">Eco-Shop</a></li>
-          <li><a class="nav-link scrollto" href="#services">Carpooling</a></li>
+          <li><a class="nav-link scrollto" href="/carpooling/search">Carpooling</a></li>
           <li><a class="nav-link scrollto " href="#portfolio">Sharing Hub</a></li>
           <li><a class="nav-link scrollto" href="#team">Events</a></li>
-          <!--<li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li><a href="#">Drop Down 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Drop Down 2</a></li>
-              <li><a href="#">Drop Down 3</a></li>
-              <li><a href="#">Drop Down 4</a></li>
-            </ul>
-          </li>-->
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -87,10 +69,9 @@
 
     </div>
   </header><!-- End Header -->
+  {% block body %}
 
-{% block content %}
-
-{% endblock %}
+  {% endblock %}  
 
     <!-- ======= Footer ======= -->
 <footer id="footer" style="padding: 20px 0; background-color: #f8f9fa;">
@@ -137,5 +118,7 @@
 
   <!-- Template Main JS File -->
   <script src="{{asset('js/main.js')}}"></script>
+  <script src="{{asset('js/carpooling.js') }}"></script>
+
 {% endblock %}
 </html>

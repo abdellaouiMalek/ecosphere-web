@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- Load Leaflet.js CSS before JavaScript -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
+    <style type="text/css">
+        /* Ensure the map fills the entire right side */
+        #map {
+            height: 100vh;
+            width: calc(100% - 400px); /* Adjust this width as needed */
+            float: right;
+        }
+
+        /* Style for left side containing input field */
+        .left-side {
+            float: left;
+            width: 400px; /* Adjust this width as needed */
+            height: 100vh;
+            overflow-y: auto; /* Allow scrolling if content exceeds height */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+    </style>
+    <title>Map with Dynamic Markers</title>
+</head>
+<body>
+    <div class="left-side">
+        <h2>Input Field</h2>
+        <form id="form">
+            <label for="departure">Departure:</label>
+            <input type="text" id="departure" name="departure"><br><br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div id="map"></div>
+
+    <!-- Load Leaflet.js JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize the map with center at Tunis
+            var lat = 36.8065; // Tunis latitude
+            var lon = 10.1815; // Tunis longitude
+            var macarte = null;
+            var marker = null; // Variable to store the current marker
+
+            function initMap() {
+                // Create the map object and set its view to Tunis
+                macarte = L.map('map').setView([lat, lon], 13);
+
+                // Specify the tile provider for the map tiles
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: 'Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(macarte);
+
+                // Add click event listener to the map to add markers
+                macarte.on('click', function (e) {
+                    if (marker) {
+                        macarte.removeLayer(marker); // Remove the previous marker
+                    }
+                    marker = L.marker(e.latlng).addTo(macarte);
+
+                    // Use reverse geocoding to get city name from Mapbox Geocoding API
+                    fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${e.latlng.lng},${e.latlng.lat}.json?access_token=pk.eyJ1IjoibWFsZWsyYWJkIiwiYSI6ImNsdGJsenVtMzFrNWYyanFyaWoyNWV2YXYifQ.fWAD0XMItiyHb-yvooSPTQ&language=en`).then(response => response.json()).then(data => { // Extract city name from Mapbox API response
+                        const city = data.features.find(feature => feature.place_type.includes('place')).text;
+                        console.log('City:', city);
+
+                        // Set the value of the departure input field to the city name
+                        var departureInput = document.getElementById('departure');
+                        console.log('Departure Input:', departureInput); // Debug output
+                        if (departureInput) {
+                            departureInput.value = city;
+                        } else {
+                            console.error('Error: Departure input field not found.');
+                        }
+                    }).catch(error => {
+                        console.error('Error:', error);
+                    });
+                });
+            }
+
+            // Call the initMap function when the DOM is loaded
+            initMap();
+        });
+    </script>
+</body>
+</html>

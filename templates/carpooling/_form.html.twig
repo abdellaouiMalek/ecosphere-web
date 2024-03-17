@@ -1,0 +1,9 @@
+{{ form_start(form , {'attr':{'novalidate' : 'novalidate'}}) }}
+
+{{ form_row(form.destination, {'attr': {'class': 'form-control mb-3'}}) }}
+{{ form_row(form.departure, {'attr': {'class': 'form-control mb-3'}}) }}
+
+
+<button type="submit" class="btn btn-primary">{{ button_label }}</button>
+
+{{ form_end(form) }}

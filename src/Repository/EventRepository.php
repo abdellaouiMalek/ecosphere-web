@@ -5,15 +5,8 @@ namespace App\Repository;
 use App\Entity\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\User;
 
-/**
- * @extends ServiceEntityRepository<Event>
- *
- * @method Event|null find($id, $lockMode = null, $lockVersion = null)
- * @method Event|null findOneBy(array $criteria, array $orderBy = null)
- * @method Event[]    findAll()
- * @method Event[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
 class EventRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -21,28 +14,43 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
-//    /**
-//     * @return Event[] Returns an array of Event objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('e.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findByUser(User $user)
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere(':user MEMBER OF e.users')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Event
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+
+public function getPaginatedEvents($page, $limit, $filters = null){
+    $query = $this->createQueryBuilder('a');
+        
+
+    // On filtre les données
+    if($filters != null){
+        $query->andWhere('a.category IN(:cats)')
+            ->setParameter(':cats', array_values($filters));
+    }
+
+    $query->orderBy('a.date')
+        ->setFirstResult(($page * $limit) - $limit)
+        ->setMaxResults($limit)
+    ;
+    return $query->getQuery()->getResult();
+}
+
+public function getTotalEvents($filters = null){
+    $query = $this->createQueryBuilder('a')
+        ->select('COUNT(a)');
+        
+    // On filtre les données
+    if($filters != null){
+        $query->andWhere('a.category IN(:cats)')
+            ->setParameter(':cats', array_values($filters));
+    }
+
+    return $query->getQuery()->getSingleScalarResult();
+}
 }
